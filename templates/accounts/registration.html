@@ -1,0 +1,77 @@
+{% load static %} {% include "components\header.html" %}
+
+<body style="background-color: #984b53;" class="authentication-bg authentication-bg-pattern">
+
+    <div class="account-pages mt-5 mb-5">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-md-8 col-lg-6 col-xl-5">
+                    <div class="card">
+
+                        <div class="card-body p-4">
+
+                            <div class="text-center w-75 m-auto">
+                                <a href="index.html">
+                                    <h2>JacLiner<br> BondFund</h2>
+                                </a>
+                            </div>
+
+                            <h5 class="auth-title">Create Account</h5>
+
+                            <form action="#" method="POST">
+
+                                <div class="form-group">
+                                    <label for="fullname">User Name</label>
+                                    <input type="text" name="username" id="inputUsername" class="form-control" placeholder="Username" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="emailaddress">Email address</label>
+                                    <input type="email" name="email" id="inputEmail" class="form-control" placeholder="Email address" required autofocus>
+                                </div>
+                                <div class="form-group">
+                                    <label for="password">Password</label>
+                                    <input type="password" name="password1" id="inputPassword1" class="form-control" placeholder="Password" required>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="password">Confirm Password</label>
+                                    <input type="password" name="password2" id="inputPassword2" class="form-control" placeholder="Confirm password" required>
+
+                                </div>
+                                {% for field in registration_form %}
+                                <p>
+                                    {% for error in field.errors %}
+                                    <p style="color: red">{{ error }}</p>
+                                    {% endfor %}
+                                </p>
+                                {% endfor %} {% if registration_form.non_field_errors %}
+                                <div style="color: red">
+                                    <p>{{registration_form.non_field_errors}}</p>
+                                </div>
+
+                                {% endif %} {% csrf_token %}
+                                <div class="form-group mb-0 text-center">
+                                    <button class="btn btn-danger btn-block" type="submit"> Sign Up </button>
+                                </div>
+
+
+                            </form>
+
+                        </div>
+                        <!-- end card-body -->
+                    </div>
+                    <!-- end card -->
+                </div>
+                <!-- end col -->
+            </div>
+            <!-- end row -->
+        </div>
+        <!-- end container -->
+    </div>
+    <!-- end page -->
+
+    {% include "components/footer.html" %} {% include "components/js.html" %}
+
+</body>
+
+</html>

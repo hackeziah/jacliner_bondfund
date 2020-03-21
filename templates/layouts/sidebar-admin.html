@@ -1,0 +1,97 @@
+<!-- ========== Left Sidebar Start ========== -->
+<div class="left-side-menu" style="background:#323434">
+
+    <div class="slimscroll-menu">
+        <!--- Sidemenu -->
+        <div id="sidebar-menu">
+
+            <ul class="metismenu" id="side-menu">
+
+                <li class="menu-title" style="color:#a4b7b7;font-size:15px;margin-bottom:15px;font-weight:100;margin-left:25px;color:#fff">
+                    Welcome <span style="color:#984b53">Admin</span> !</li>
+                <li class="active">
+                    <a href="" class="active">
+                        <i class="la la-dashboard" style="color:#984b53"></i>
+                        <span> Dashboard </span>
+                    </a>
+                </li>
+
+
+                <li>
+                    <a href="javascript: void(0);" aria-expanded="false">
+                        <i class="fas fa-handshake" style="color: #984b53;"></i>
+                        <span> Transaction </span>
+                        <span class="menu-arrow"></span>
+                    </a>
+                    <ul class="nav-second-level collapse" aria-expanded="false">
+                        <li>
+                            <a href="{% url 'bond_fund:all-transaction' %}">All Trasaction</a>
+                        </li>
+                        <li>
+
+                            <a href="{% url 'bond_fund:deduction-transaction' %}">Deduction Transaction</a>
+                        </li>
+                        <li>
+                            <a href="{% url 'bond_fund:savings-transaction' %}">Saving Transaction</a>
+                        </li>
+
+                    </ul>
+                </li>
+                <li class="active">
+                    <a href="{% url 'bond_fund:user-management'%}" class="active">
+                        <i class="la la-users" style="color:#984b53"></i>
+                        <span>User Management </span>
+                    </a>
+                </li>
+
+                <li class="">
+                    <a href="javascript: void(0);" aria-expanded="false">
+                        <i class="la la-gear" style="color: #984b53;"></i>
+                        <span> Settings </span>
+                        <span class="menu-arrow"></span>
+                    </a>
+                    <ul class="nav-second-level collapse" aria-expanded="false">
+                        <li>
+                            <a href="{% url 'bond_fund:deduction-setup'%}">Deduction</a>
+                        </li>
+                        <li>
+                            <a href="{% url 'bond_fund:company-setup'%}">Company</a>
+                        </li>
+                        <li>
+                            <a href="{% url 'bond_fund:position-setup'%}">Position</a>
+                        </li>
+
+                    </ul>
+                </li>
+
+                <li class="">
+                    <a href="javascript: void(0);" aria-expanded="false">
+                        <i class="la la-file-text" style="color: #984b53;"></i>
+                        <span> Reports </span>
+                        <span class="menu-arrow"></span>
+                    </a>
+                    <ul class="nav-second-level collapse" aria-expanded="false">
+                        <li>
+                            <a href="#">Deduction</a>
+                        </li>
+                        <li>
+                            <a href="#">Company</a>
+                        </li>
+                        <li>
+                            <a href="#">Position</a>
+                        </li>
+
+                    </ul>
+                </li>
+            </ul>
+        </div>
+        <!--
+                                End Sidebar -->
+
+        <div class=" clearfix "></div>
+
+    </div>
+    <!-- Sidebar -left -->
+
+</div>
+<!-- Left Sidebar End -->

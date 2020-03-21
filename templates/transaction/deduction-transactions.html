@@ -1,0 +1,337 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <title>{{title}}t</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta content="A fully featured admin theme which can be used to build CRM, CMS, etc." name="description" />
+    <meta content="Coderthemes" name="author" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <!-- App favicon -->
+    {% include "layouts/links.html" %}
+
+</head>
+
+<body>
+
+    <!-- Begin page -->
+    <div id="wrapper">
+
+        <!-- Topbar Start -->
+        {% include "layouts/top-admin.html" %}
+        <!-- end Topbar -->
+
+        <!-- ========== Left Sidebar Start ========== -->
+        {% include 'layouts/sidebar-admin.html' %}
+
+        <!-- Left Sidebar End -->
+
+        <!-- ============================================================== -->
+        <!-- Start Page Content here -->
+        <!-- ============================================================== -->
+
+        <div class="content-page">
+            <div class="content">
+
+                <!-- Start Content-->
+                <div class="container-fluid">
+
+                    <!-- start page title -->
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="page-title-box">
+                                <div class="page-title-right">
+                                    <ol class="breadcrumb m-0">
+                                        <!-- <li class="breadcrumb-item"><a href="javascript: void(0);">Xeria</a></li> -->
+                                        <li class="breadcrumb-item"><a href="javascript: void(0);">Transaction</a></li>
+                                        <li class="breadcrumb-item active">{{ title }}</li>
+                                    </ol>
+                                </div>
+                                <h4 class="page-title">{{ title }}</h4>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- end page title -->
+
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="card">
+                                <div class="card-body">
+                                    <button type="button" class="btn btn-success waves-effect waves-light float-right" id="addDeduction" data-toggle="modal" data-target="#con-close-modal">Add
+                                        Deduction</button>
+                                    <h4 class="header-title" style="font-size:20px;margin-bottom:20px">
+                                        {{ contentheader }}
+                                    </h4>
+
+                                    <table id="basic-datatable" class="table table-hover m-0 table-centered dt-responsive nowrap w-100">
+                                        <thead>
+                                            <tr>
+                                                <th width="20%">Account No</th>
+                                                <th width="20%">Name</th>
+                                                <th width="10%">Balance</th>
+                                                <th width="10%">Amount Deducted</th>
+                                                <th width="20%">Type</th>
+                                                <th width="10%">Touch By</th>
+                                                <th width="10%">Status</th>
+                                                <th width="10%">Date</th>
+                                                <th width="10%">Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+
+                                                <td>ABD-23232</td>
+                                                <td>KEVIN PAUL LAMADRID</td>
+                                                <td>P 1500.00</td>
+                                                <td>P 1500.00</td>
+                                                <td>Deduction Donut</td>
+                                                <td>Anthony Lamadrid</td>
+                                                <td>
+                                                    <span class="badge badge-success">Accepted</span>
+                                                </td>
+                                                <td>
+                                                    12/09/2020 | 11:30 PM
+                                                </td>
+                                                <td>
+                                                    <div class="btn-group dropdown">
+                                                        <a href="javascript: void(0);" class="table-action-btn dropdown-toggle arrow-none btn btn-light btn-sm" data-toggle="dropdown" aria-expanded="false"><i
+                                                                class="mdi mdi-dots-horizontal"></i></a>
+                                                        <div class="dropdown-menu dropdown-menu-right" x-placement="bottom-end" style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(38px, 28px, 0px);">
+
+                                                            <a class="dropdown-item" href="#" id="viewUser" data-toggle="modal" data-target="#con-close-modal"><i
+                                                                    class="mdi mdi-eye mr-2 text-muted font-18 vertical-middle"></i>View
+                                                            </a>
+
+                                                            <a class="dropdown-item" href="#" id="updateUser" data-toggle="modal" data-target="#con-close-modal"><i
+                                                                    class="mdi mdi-pencil mr-2 text-muted font-18 vertical-middle"></i>Edit
+                                                            </a>
+
+                                                            <a class="dropdown-item" href="#" id="deleteUser"><i
+                                                                    class="mdi mdi-delete mr-2 text-muted font-18 vertical-middle">
+                                                                    <input type="hidden" id="id" name="id" value="">
+                                                                </i>Remove</a>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                            </tr>
+
+                                        </tbody>
+                                    </table>
+
+                                </div>
+                                <!-- end card body-->
+                            </div>
+                            <!-- end card -->
+                        </div>
+                        <!-- end col -->
+                    </div>
+                    <!-- end row -->
+
+                </div>
+                <!-- container -->
+
+            </div>
+            <!-- content -->
+
+            <!-- Footer Start -->
+            {% include "layouts/footer-admin.html" %}
+            <!-- end Footer -->
+
+        </div>
+
+        <!-- ============================================================== -->
+        <!-- End Page content -->
+        <!-- ============================================================== -->
+
+
+    </div>
+    <!-- END wrapper -->
+
+
+    <!-- Vendor js -->
+    {% include "layouts/js.html" %}
+
+
+
+    <div class="modal fade bs-example-modal show" id="addDeductionModal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true" style="display: none;">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Register User</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                </div>
+                <div class="modal-body p-4">
+
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <button class="btn btn-primary waves-effect waves-light dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">EMPLOYEE NUMBER</button>
+                                </div>
+                                <input type="text" class="form-control" id="field-1" placeholder="Enter Employee Number">
+
+                            </div>
+                        </div>
+                    </div>
+                    <br>
+                    <br>
+
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="field-1" class="control-label">Name</label>
+                                <input type="text" class="form-control" id="field-1" placeholder="">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="field-2" class="control-label">Surname</label>
+                                <input type="text" class="form-control" id="field-2" placeholder="">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Company</label> <br>
+                                <select class="wide" data-plugin="customselect" style="display: none;">
+                                    <option value="0">TEST</option>
+                                    <option value="1">Some option</option>
+                                    <option value="2">Another option</option>
+                                    <option value="3" disabled="">A disabled option</option>
+                                    <option value="4">Potato</option>
+                                </select>
+                                <div class="nice-select wide" tabindex="0"><span class="current">TEST</span>
+                                    <ul class="list">
+                                        <li data-value="0" class="option selected focus">TEST</li>
+                                        <li data-value="1" class="option">Some option</li>
+                                        <li data-value="2" class="option">Another option</li>
+                                        <li data-value="3" class="option disabled">A disabled option</li>
+                                        <li data-value="4" class="option">Potato</li>
+                                    </ul>
+                                </div>
+                                <div class="clearfix"></div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Position</label> <br>
+                                <select class="wide" data-plugin="customselect" style="display: none;">
+                                    <option value="0">TEST</option>
+                                    <option value="1">Some option</option>
+                                    <option value="2">Another option</option>
+                                    <option value="3" disabled="">A disabled option</option>
+                                    <option value="4">Potato</option>
+                                </select>
+                                <div class="nice-select wide" tabindex="0"><span class="current">TEST</span>
+                                    <ul class="list">
+                                        <li data-value="0" class="option selected focus">TEST
+                                        </li>
+                                        <li data-value="1" class="option">Some option</li>
+                                        <li data-value="2" class="option">Another option</li>
+                                        <li data-value="3" class="option disabled">A disabled option
+                                        </li>
+                                        <li data-value="4" class="option">Potato</li>
+                                    </ul>
+                                </div>
+                                <div class="clearfix"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="field-1" class="control-label">Email</label>
+                                <input type="text" class="form-control" id="field-1" placeholder="John">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="field-2" class="control-label">Contact No</label>
+                                <input type="text" class="form-control" id="field-2" placeholder="Doe">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group no-margin">
+                                <label for="field-7" class="control-label">Remarks</label>
+                                <textarea class="form-control" id="field-7" placeholder="Write something about yourself"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary waves-effect" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-info waves-effect waves-light">Save changes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Modal For Edit -->
+    <div id="updateUserModal" class="modal fade show" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="display: none; padding-right: 16px;" aria-modal="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title" id="myModalLabel">Modal Heading</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                </div>
+                <div class="modal-body">
+                    <h6>Text in a modal</h6>
+                    <p>Duis mollis, est non commodo luctus, nisi erat porttitor ligula.</p>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-light waves-effect" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary waves-effect waves-light">Save changes</button>
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+    <!-- Modal For Edit -->
+
+    <!-- MOdal View Details -->
+    <div class="modal fade bs-example-modal-lg show" id="viewDetails" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" style="display: none; padding-right: 16px;" aria-modal="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title" id="myLargeModalLabel">Large modal</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                </div>
+                <div class="modal-body">
+                    ... sdzdfsdfsfs
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-light waves-effect" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+    <!-- MOdal View Details -->
+
+
+</body>
+
+</html>
+<script>
+    $(document).on('click', '#addDeduction', function() {
+        $('#addDeductionModal').modal('show');
+    });
+    $(document).on('click', '#updateUser', function() {
+        $('#updateUserModal').modal('show');
+    });
+    $(document).on('click', '#viewUser', function() {
+        $('#viewDetails').modal('show');
+    });
+</script>

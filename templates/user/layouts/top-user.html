@@ -1,0 +1,74 @@
+{% load static %}
+<div class="navbar-custom" style="background:#242525">
+    <ul class="list-unstyled topnav-menu float-right mb-0">
+        <li class="dropdown notification-list">
+            <a class="nav-link dropdown-toggle  waves-effect" data-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="false">
+                <i class="fe-bell noti-icon" style="color:#a4b7b7"></i>
+                <span class="badge badge-info rounded-circle noti-icon-badge">1</span>
+            </a>
+        </li>
+
+        <li class="dropdown notification-list">
+            <a class="nav-link dropdown-toggle nav-user mr-0 waves-effect" data-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="false">
+                <img src="{% static 'dist/assets/images/users/user-7.jpg' %}" alt="user-image" class="rounded-circle" style="border:1.5px solid ">
+                <span class="pro-user-name ml-1" style="color:#a4b7b7">
+
+                    <i class="mdi mdi-chevron-down"></i>
+                </span>
+            </a>
+            <div class="dropdown-menu dropdown-menu-right profile-dropdown" x-placement="bottom-end" style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(78px, 70px, 0px);">
+                <!-- item-->
+                <div class="dropdown-item noti-title">
+                    <h5 class="m-0 text-white">
+                        Welcome !
+                    </h5>
+                </div>
+
+                <!-- item-->
+                <a href="javascript:void(0);" class="dropdown-item notify-item">
+                    <i class="fe-user"></i>
+                    <span>My Account</span>
+                </a>
+
+                <!-- item-->
+                <a href="javascript:void(0);" class="dropdown-item notify-item">
+                    <i class="fe-settings"></i>
+                    <span>Settings</span>
+                </a>
+
+                <!-- item-->
+                <a href="javascript:void(0);" class="dropdown-item notify-item">
+                    <i class="fe-lock"></i>
+                    <span>Lock Screen</span>
+                </a>
+
+                <div class="dropdown-divider"></div>
+
+                <!-- item-->
+
+                <a href="http://happyink.ph/logout" class="dropdown-item notify-item">
+                    <i class="fe-log-out"></i>
+                    <span>Logout</span>
+                </a>
+            </div>
+        </li>
+    </ul>
+
+    <!-- LOGO -->
+    <div class="logo-box" style="background:#242525">
+        <a href="" style="color:#fff">
+            <label class="logo text-center" style="font-size:22.5px;text-decoration:none;overflow:hidden;font-weight:600"><span
+                    style="color:#984b53">BFS</span></label>
+        </a>
+    </div>
+
+    <ul class="list-unstyled topnav-menu topnav-menu-left m-0">
+        <li>
+            <button class="button-menu-mobile waves-effect">
+                <span style="background:#fff"></span>
+                <span style="background:#fff"></span>
+                <span style="background:#fff"></span>
+            </button>
+        </li>
+    </ul>
+</div>

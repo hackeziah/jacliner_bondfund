@@ -1,0 +1,186 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <title>{{title}}t</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta content="A fully featured admin theme which can be used to build CRM, CMS, etc." name="description" />
+    <meta content="Coderthemes" name="author" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <!-- App favicon -->
+    {% include "layouts/links.html" %}
+
+</head>
+
+<body>
+
+    <!-- Begin page -->
+    <div id="wrapper">
+
+        <!-- Topbar Start -->
+        {% include "layouts/top-admin.html" %}
+        <!-- end Topbar -->
+
+        <!-- ========== Left Sidebar Start ========== -->
+        {% include 'layouts/sidebar-admin.html' %}
+
+        <!-- Left Sidebar End -->
+
+        <!-- ============================================================== -->
+        <!-- Start Page Content here -->
+        <!-- ============================================================== -->
+
+        <div class="content-page">
+            <div class="content">
+
+                <!-- Start Content-->
+                <div class="container-fluid">
+
+                    <!-- start page title -->
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="page-title-box">
+                                <div class="page-title-right">
+                                    <ol class="breadcrumb m-0">
+                                        <!-- <li class="breadcrumb-item"><a href="javascript: void(0);">Xeria</a></li> -->
+                                        <li class="breadcrumb-item"><a href="javascript: void(0);">Settings</a></li>
+                                        <li class="breadcrumb-item active">{{ title }}</li>
+                                    </ol>
+                                </div>
+                                <h4 class="page-title">{{ title }}</h4>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- end page title -->
+                    <div class="row">
+                        <div class="col-8">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h4 class="header-title" style="font-size:20px;margin-bottom:20px">
+                                        {{ contentheader }}</h4>
+
+                                    <table id="basic-datatable" class="table table-hover m-0 table-centered dt-responsive nowrap w-100">
+                                        <thead>
+                                            <tr>
+                                                <th width="15%">ID</th>
+                                                <th width="35%">Company Name</th>
+                                                <th width="25%">Description</th>
+                                                <th width="25%">Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>1</td>
+                                                <td>Donut</td>
+                                                <td>Description</td>
+                                                <td><button type="button" id="updateDeduc" class="btn btn-info waves-effect waves-light" style="background:#49cd6e"><i class="mdi mdi-pencil"></i>
+                                                    </button>
+                                                    <button type="button" id="" class="btn btn-danger waves-effect waves-light" style="background:#dc4242"><i class="mdi mdi-trash-can"></i>
+                                                        <input type="hidden" id="" name="" value="">
+                                                    </button></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+
+                                </div>
+                                <!-- end card body-->
+                            </div>
+                            <!-- end card -->
+                        </div>
+                        <!-- end col-->
+                        <div class="col-4">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h4 class="header-title" style="font-size:20px;margin-bottom:20px">Add</h4>
+                                    <form action="" method="POST" enctype="multipart/form-data">
+                                        <input type="hidden" name="_token" value="wlNcED0ca8631xFSXDPyhX027UqoYOTH3HN8xtCT">
+                                        <div class="form-group">
+                                            <label for="name">Companys </label>
+                                            <input class="form-control" type="text" id="name" name="Company" placeholder="Enter your Company Name">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="description">Description</label>
+                                            <input class="form-control" type="description" id="description" name="description" placeholder="Enter your Description">
+                                        </div>
+                                        <div class="form-group mb-0 text-center">
+                                            <button type="submit" id="" class="btn btn-danger btn-block">Add Company
+                                            </button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- end row -->
+
+                </div>
+                <!-- container -->
+
+            </div>
+            <!-- content -->
+
+            <!-- Footer Start -->
+            {% include "layouts/footer-admin.html" %}
+            <!-- end Footer -->
+
+        </div>
+
+        <!-- ============================================================== -->
+        <!-- End Page content -->
+        <!-- ============================================================== -->
+
+
+    </div>
+    <!-- END wrapper -->
+
+
+    <!-- Vendor js -->
+    {% include "layouts/js.html" %}
+
+
+
+
+    <!-- Modal For Edit -->
+    <div id="updateDeducModal" class="modal fade show" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="display: none; padding-right: 16px;" aria-modal="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title" id="myModalLabel">Modal Heading</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                </div>
+                <div class="modal-body">
+                    <h6>Text in a modal</h6>
+                    <p>Duis mollis, est non commodo luctus, nisi erat porttitor ligula.</p>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-light waves-effect" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary waves-effect waves-light">Save changes</button>
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+    <!-- Modal For Edit -->
+
+
+
+
+</body>
+
+</html>
+<script>
+    $(document).on('click', '#addUser', function() {
+        $('#addUserModal').modal('show');
+    });
+    $(document).on('click', '#updateDeduc', function() {
+        $('#updateDeducModal').modal('show');
+    });
+    $(document).on('click', '#viewUser', function() {
+        $('#viewDetails').modal('show');
+    });
+</script>
