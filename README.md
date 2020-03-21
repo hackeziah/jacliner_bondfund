@@ -1,2 +1,3 @@
 # jacliner_bondfund
-MY  1 Month Coding Challenge (Project)
+MY  1 Month Coding Challenge (Project INCOVID)
+PYTHON DJANGO
