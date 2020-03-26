@@ -2,8 +2,10 @@ from django.shortcuts import render
 from django.urls import reverse, reverse_lazy
 from django.contrib.auth.decorators import login_required
 from account.models import Company, Position
+from bond_fund.models import TransactionType
 from account.decorators import user_is_staff, user_is_user, user_is_admin
 from account.forms import CompanyForm, PositionForm
+from bond_fund.forms import TransactionManageForm
 from django.http import HttpResponseRedirect
 from django.contrib import messages
 from django.core.exceptions import ValidationError
@@ -11,14 +13,55 @@ from django.http import JsonResponse
 
 
 @login_required(login_url=reverse_lazy('account:login'))
-def deduction_view(request):
-    contentheader = "Manage Deduction"
-    title = "Maintenance Deduction"
+def transaction_view(request):
+    data = TransactionType.objects.filter(trash=0)
+    contentheader = "Manage Transaction"
+    title = "Maintenance Transaction"
+
+    if request.method == 'POST':
+        form = TransactionManageForm(request.POST)
+        if form.is_valid():
+            data = TransactionType(
+                ttype=form.cleaned_data['ttype'],
+                name=request.POST['name'],
+                trash=0,
+            )
+            data.save()
+            messages.success(request, 'Transaction was Created!')
+            return HttpResponseRedirect('/transaction-setup')
+    else:
+        form = TransactionManageForm()
     content = {
         'title': title,
-        'contentheader': contentheader
+        'contentheader': contentheader,
+        'data': data,
+        'transaction_form': form
+
     }
-    return render(request, 'settings/deduction.html', content)
+
+    return render(request, 'settings/transaction.html', content)
+# Delete Company
+@login_required(login_url=reverse_lazy('account:login'))
+@user_is_admin
+def delete_transactionmanage(request):
+    if request.GET:
+        id = request.GET['id']
+        data = TransactionType.objects.get(id=int(id))
+        data.trash = 1
+        data.save()
+    return HttpResponseRedirect('/transaction-setup')
+
+# edit-company-Show
+@login_required(login_url=reverse_lazy('account:login'))
+@user_is_admin
+def edit_transactionmanage(request):
+    if request.method == 'GET':
+        id = request.GET.get('id', None)
+        data = TransactionType.objects.get(id=int(id))
+        data.ttype = request.GET.get('ttype', None)
+        data.name = request.GET.get('name', None)
+        data.save()
+    return HttpResponseRedirect('/transaction-setup')
 
 # All Company
 @login_required(login_url=reverse_lazy('account:login'))
