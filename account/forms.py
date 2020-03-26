@@ -1,7 +1,7 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import authenticate
-from .models import UserAccount
+from .models import UserAccount, Company, Position
 
 
 class RegistrationForm(UserCreationForm):
@@ -11,6 +11,26 @@ class RegistrationForm(UserCreationForm):
     class Meta:
         model = UserAccount
         fields = ('email', 'username', 'password1', 'password2')
+
+
+class CompanyForm(forms.Form):
+    company_name = forms.CharField(
+        required=True,
+        widget=forms.TextInput(
+            attrs={'class': 'form-control', 'placeholder': 'Company '}))
+
+    # description = forms.CharField(widget=forms.TextInput(
+    #     attrs={
+    #         'class': 'form-control',
+    #         'placeholder': 'Description'}
+    # ))
+
+
+class PositionForm(forms.Form):
+    position_name = forms.CharField(
+        required=True,
+        widget=forms.TextInput(
+            attrs={'class': 'form-control', 'placeholder': 'Position '}))
 
 
 class UserAccountAuthenticationForm(forms.ModelForm):
@@ -26,6 +46,7 @@ class UserAccountAuthenticationForm(forms.ModelForm):
             password = self.cleaned_data['password']
             if not authenticate(email=email, password=password):
                 raise forms.ValidationError("Invalid login")
+
 # class UserAccountAuthenticationForm(forms.ModelForm):
 #     email = forms.EmailField()
 #     password = forms.CharField(

@@ -8,7 +8,7 @@ from django.shortcuts import redirect
 def unthentication_user(view_func):
     def wrap(request, *args, **kwargs):
         if request.user.is_authenticated:  # checking of user
-            return redirect('bond_fund:user-dashboard')
+            return view_func(request, *args, **kwargs)
         else:
             return wrap(request, *args, **kwargs)
     return wrap
