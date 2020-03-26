@@ -12,6 +12,7 @@ from django.urls import reverse, reverse_lazy
 from django.contrib.auth.decorators import login_required
 from .decorators import user_is_staff, user_is_user, user_is_admin
 from .models import UserAccount, UserInfo
+from django.contrib import messages
 
 
 def logout_view(request):
@@ -19,6 +20,7 @@ def logout_view(request):
     return redirect('account:login')
 
 
+# @login_required
 def login_view(request):
     context = {}
     user = request.user  # paalam kung ano kung sino ung user na to
@@ -53,6 +55,9 @@ def registration_view(request):
             raw_password = form.cleaned_data.get('password1')
             useraccount = authenticate(email=email, password=raw_password)
             login(request, useraccount)
+            messages.success(request, 'Successfully Registered')
+            return render(request, 'accounts/login.html', context)
+
         else:
             context['registration_form'] = form
     else:

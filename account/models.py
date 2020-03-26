@@ -1,6 +1,8 @@
 from django.db import models
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
 import uuid
+from datetime import datetime
+
 
 
 class MyAccountManager(BaseUserManager):
@@ -71,9 +73,9 @@ class Company(models.Model):
     company_name = models.CharField(
         verbose_name="Company Name", max_length=50)
     description = models.CharField(
-        verbose_name="Company Description", max_length=50)
-    trash = models.CharField(
-        verbose_name="Trash", max_length=40, default="0")
+        verbose_name="Company Description", max_length=50, default="")
+    trash = models.BooleanField(verbose_name="Trash", default=0)
+
 
     def __str__(self):
         return self.company_name
@@ -83,9 +85,8 @@ class Position(models.Model):
     position_name = models.CharField(
         verbose_name="Position Name", max_length=50)
     description = models.CharField(
-        verbose_name="Position Description", max_length=50)
-    trash = models.CharField(
-        verbose_name="Trash", max_length=40, default="0")
+        verbose_name="Position Description", max_length=50, default="")
+    trash = models.BooleanField(verbose_name="Trash", default=0)
 
     def __str__(self):
         return self.position_name
@@ -94,8 +95,12 @@ class Position(models.Model):
 class UserInfo(models.Model):
     emp_no = models.CharField(
         verbose_name="Employee No", max_length=200, blank=False, unique=True)
-    userid = models.CharField(
-        verbose_name="User Id", max_length=255, unique=True)
+
+    user = models.OneToOneField(
+        UserAccount,
+        on_delete=models.CASCADE,
+        verbose_name="User",
+    )
     first_name = models.CharField(
         verbose_name="First Name", max_length=40, blank=False)
     last_name = models.CharField(
@@ -105,12 +110,17 @@ class UserInfo(models.Model):
         Company, on_delete=models.CASCADE)
     position_name = models.ForeignKey(
         Position, on_delete=models.CASCADE)
-    status = models.CharField(
-        verbose_name="Status", max_length=40, default="0")
-    trash = models.CharField(
-        verbose_name="Trash", max_length=40, default="0")
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
+    status = models.IntegerField(
+        verbose_name="Status", default="")
+    trash = models.BooleanField(verbose_name="Trash", default=False)
+    date_created = models.DateTimeField()
+    date_modified = models.DateTimeField()
+
+    def save(self):
+        if self.date_created == None:
+            self.date_created = datetime.now()
+            self.date_modified = datetime.now()
+            super(UserInfo, self).save()
 
     def __str__(self):
         return self.emp_no
