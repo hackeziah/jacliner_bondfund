@@ -7,7 +7,7 @@
     <meta charset="utf-8" />
     <title>{{title}}</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta content="A fully featured admin theme which can be used to build CRM, CMS, etc." name="description" />
+    <meta content="A fully featured admin theme which can be used to build CRM, CMS, etc." name="name" />
     <meta content="Coderthemes" name="author" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <!-- App favicon -->
@@ -66,8 +66,8 @@
                                         <thead>
                                             <tr>
                                                 <th width="15%">ID</th>
-                                                <th width="35%">Company Name</th>
-                                                <th width="25%">Description</th>
+                                                <th width="35%">Transaction Type</th>
+                                                <th width="25%">Transaction Name</th>
                                                 <th width="25%">Action</th>
                                             </tr>
                                         </thead>
@@ -75,21 +75,20 @@
                                             {% for item in data%}
                                             <tr>
                                                 <td>{{ item.id }}</td>
-                                                <td>{{ item.company_name }}</td>
-                                                <td>{{ item.description }}</td>
+                                                <td>{{ item.ttype }}</td>
+                                                <td>{{ item.name }}</td>
                                                 <td>
-                                                    <button type="button" id="updateCompany" class="btn btn-info waves-effect waves-light" style="background:#49cd6e"><i class="mdi mdi-pencil"></i>
-                                                        <input type="hidden" value="{{item.id }}" name="company_id"
-                                                            id="modal-company_id">
-                                                        <input type="hidden" id="modal-company_name" name="company_name"
-                                                            value="{{ item.company_name}}">
-                                                        <input type="hidden" id="modal-decription" name="description"
-                                                            value="{{item.description}}">
+                                                    <button type="button" id="updateTransaction" class="btn btn-info waves-effect waves-light" style="background:#49cd6e"><i class="mdi mdi-pencil"></i>
+                                                        <input type="hidden" value="{{item.id }}" name="id"
+                                                            id="modal-id">
+                                                        <input type="hidden" id="modal-ttype" name="ttype"
+                                                            value="{{ item.ttype}}">
+                                                        <input type="hidden" id="modal-name" name="name"
+                                                            value="{{item.name}}">
                                                     </button>
 
-                                                    <button type="button" id="deleteCompany" class="btn btn-danger waves-effect waves-light" style="background:#dc4242"><i class="mdi mdi-trash-can" href="">
-                                                            <input type="hidden" value="{{item.id }}" id="company_id"
-                                                                name="company_id">
+                                                    <button type="button" id="deleteTransac" class="btn btn-danger waves-effect waves-light" style="background:#dc4242"><i class="mdi mdi-trash-can" href="">
+                                                            <input type="hidden" value="{{item.id }}" id="id" name="id">
                                                         </i>
                                                     </button></td>
                                                 <!-- </a> -->
@@ -109,26 +108,29 @@
                                 <div class="card-body">
 
                                     <h4 class="header-title" style="font-size:20px;margin-bottom:20px">Add</h4>
+
+
                                     <form action="" method="POST" enctype="multipart/form-data">
                                         {% csrf_token %}
                                         <input type="hidden" name="_token" value="wlNcED0ca8631xFSXDPyhX027UqoYOTH3HN8xtCT">
                                         <div class="form-group">
-                                            <label for="name">Company </label>
-                                            <input class="form-control" type="text" id="name" name="company_name" placeholder="Enter your Company Name">
-                                            <div>
-
-                                                {% for field in company_form%}
-                                                <p>
-                                                    {% for error in field.errors %}
-                                                    <p style="color: red">{{ error }}</p>
-                                                    {% endfor %}
-                                                </p>
-                                                {% endfor %}
-                                            </div>
+                                            <label for="name">Transaction Type</label>
+                                            <input class="form-control" type="text" id="ttype" name="ttype" placeholder="Enter your Transaction Type">
+                                            <small id="helpId" class="text-muted">
+                                                <div style="color: red">
+                                                    {{ transaction_form.ttype.errors }}
+                                                </div>
+                                            </small>
                                         </div>
                                         <div class="form-group">
-                                            <label for="description">Description</label>
-                                            <input class="form-control" type="description" id="description" name="description" placeholder="Enter your Description">
+                                            <label for="transaction Name">Transaction Name</label>
+                                            <input class="form-control" type="text" id="transaction Name" name="name" placeholder="Enter your Transaction Name">
+                                            <small id="helpId" class="text-muted">
+                                                <div style="color: red">
+                                                    {{ transaction_form.name.errors }}
+
+                                                </div>
+                                            </small>
                                         </div>
                                         <div class="form-group mb-0 text-center">
                                             <button type="submit" id="" class="btn btn-danger btn-block">Add
@@ -145,7 +147,6 @@
                                             {% endfor %}
                                         </div>
                                     </form>
-
 
 
                                 </div>
@@ -182,27 +183,27 @@
 
 
     <!-- Modal For Edit -->
-    <div id="updateCompanyModal" class="modal fade show" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="display: none; padding-right: 16px;" aria-modal="true">
+    <div id="updateTransactioinModal" class="modal fade show" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="display: none; padding-right: 16px;" aria-modal="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h4 class="modal-title" id="myModalLabel">Edit Company</h4>
+                    <h4 class="modal-title" id="myModalLabel">Edit</h4>
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
                 </div>
                 <div class="modal-body">
-                    <!-- <h6 id="Edit-company_name"></h6> -->
+                    <!-- <h6 id="Edit-ttype"></h6> -->
                     <div class="form-group">
-                        <input type="text" class="form-control" name="company_name" id="Edit-company_name" value="Edit-company_name">
+                        <input type="text" class="form-control" name="ttype" id="Edit-ttype" value="Edit-ttype">
                     </div>
                     <div class="form-group">
-                        <input type="text" class="form-control" name="description" id="Edit-description" value="Edit-description">
+                        <input type="text" class="form-control" name="name" id="Edit-name" value="Edit-name">
                     </div>
-                    <input type="hidden" class="form-control" name="description" id="Edit-id" value="Edit-id">
+                    <input type="hidden" class="form-control" name="id" id="Edit-id" value="Edit-id">
 
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-light waves-effect" data-dismiss="modal">Close</button>
-                    <button type="button" id="editCompany" class="btn btn-primary waves-effect waves-light">Save
+                    <button type="button" id="editTransac" class="btn btn-primary waves-effect waves-light">Save
                         changes</button>
                 </div>
             </div>
@@ -221,24 +222,24 @@
 <script>
     $(document).on('click', '#addUser', function() {
         $('#addUserModal').modal('show');
-        $('#updateCompanyModal').modal('show');
+        $('#updateTransactioinModal').modal('show');
     });
-    $(document).on('click', '#updateCompany', function() {
-        var company_id = $(this).find('#company_id').val();
-        $('#updateCompanyModal').modal('show');
-        $('#Edit-id').val($(this).find('#modal-company_id').val());
-        $('#Edit-description').val($(this).find('#modal-decription').val());
-        $('#Edit-company_name').val($(this).find('#modal-company_name').val());
+    $(document).on('click', '#updateTransaction', function() {
+        var id = $(this).find('#id').val();
+        $('#updateTransactioinModal').modal('show');
+        $('#Edit-id').val($(this).find('#modal-id').val());
+        $('#Edit-name').val($(this).find('#modal-name').val());
+        $('#Edit-ttype').val($(this).find('#modal-ttype').val());
     });
     $(document).on('click', '#viewUser', function() {
         $('#viewDetails').modal('show');
     });
 
-    $(document).on('click', '#editCompany', function() {
+    $(document).on('click', '#editTransac', function() {
         var id = $('#Edit-id').val();
 
-        var description = $('#Edit-description').val();
-        var company_name = $('#Edit-company_name').val();
+        var name = $('#Edit-name').val();
+        var ttype = $('#Edit-ttype').val();
         Swal.fire({
             title: 'Are you sure?',
             text: "You want to update this!",
@@ -250,12 +251,12 @@
         }).then((willUpdate) => {
             if (willUpdate.value) {
                 $.ajax({
-                    url: "{% url 'bond_fund:edit-company' %}",
+                    url: "{% url 'bond_fund:edit-transaction-manage' %}",
                     method: 'GET',
                     data: {
                         id: id,
-                        description: description,
-                        company_name: company_name,
+                        name: name,
+                        ttype: ttype,
                         _token: '{% csrf_token %}'
                     },
                     success: function(data, ) {
@@ -274,8 +275,8 @@
         });
 
     });
-    $(document).on('click', '#deleteCompany', function() {
-        var company_id = $(this).find('#company_id').val();
+    $(document).on('click', '#deleteTransac', function() {
+        var id = $(this).find('#id').val();
         Swal.fire({
             title: 'Are you sure?',
             text: "You won't be able to trash this!",
@@ -287,10 +288,10 @@
         }).then((willDelete) => {
             if (willDelete.value) {
                 $.ajax({
-                    url: "{% url 'bond_fund:delete-company' %}",
+                    url: "{% url 'bond_fund:delete-transaction-manage' %}",
                     method: 'GET',
                     data: {
-                        id: company_id,
+                        id: id,
                         _token: '{% csrf_token %}'
                     },
                     success: function(data, ) {
