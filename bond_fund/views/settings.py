@@ -116,6 +116,7 @@ def add_company(request):
 # Delete Company
 @login_required(login_url=reverse_lazy('account:login'))
 @user_is_admin
+
 def delete_company(request):
     if request.GET:
         id = request.GET['id']
