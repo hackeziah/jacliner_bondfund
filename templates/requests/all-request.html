@@ -60,7 +60,6 @@
                                     <h4 class="header-title" style="font-size:20px;margin-bottom:20px">
                                         {{ contentheader }}
                                     </h4>
-
                                     <table id="basic-datatable" class="table table-hover m-0 table-centered dt-responsive nowrap w-100">
                                         <thead>
                                             <tr>
@@ -69,7 +68,7 @@
                                                 <th width="20%">Status</th>
                                                 <th width="10%">Amount</th>
                                                 <th width="20%">Requesting For</th>
-                                                <th width="10%">Cleck</th>
+                                                <th width="10%">Release By</th>
                                                 <th width="10%">Action</th>
                                             </tr>
                                         </thead>
@@ -93,7 +92,7 @@
                                                 </td>
                                                 <td><span>&#8369;</span> {{ item.amount }}</td>
                                                 <td>
-                                                    <b>{{ item.get_ttype }} | {{ item.get_name }}</b>
+                                                    <b>{{ item.get_transaction }} | {{ item.get_name }}</b>
                                                 </td>
                                                 <td>
                                                     <b>{{ item.clerk|upper }} </b>
@@ -104,8 +103,11 @@
                                                         <a href="javascript: void(0);" class="table-action-btn dropdown-toggle arrow-none btn btn-light btn-sm" data-toggle="dropdown" aria-expanded="false"><i
                                                                 class="mdi mdi-dots-horizontal"></i></a>
                                                         <div class="dropdown-menu dropdown-menu-right" x-placement="bottom-end" style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(38px, 28px, 0px);">
-                                                            <a class="dropdown-item" href="#" id="viewUser" data-toggle="modal" data-target="#con-close-modal"><i
-                                                                    class="mdi mdi-eye mr-2 text-muted font-18 vertical-middle"></i>View
+                                                            <a class="dropdown-item" href="#" id="viewDetail" data-toggle="modal" data-target="#con-close-modal"><i
+                                                                    class="mdi mdi-eye mr-2 text-muted font-18 vertical-middle"></i>
+                                                                <input type="hidden" value="{{item.request_no }}"
+                                                                    name="request_no" id="detail-request_no">View
+
                                                             </a>
 
                                                             <a class="dropdown-item" href="#" id="chageStatus" data-toggle="modal" data-target="#con-close-modal"><i
@@ -254,13 +256,13 @@
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label for="field-1" class="control-label">Email</label>
-                                <input type="text" class="form-control" id="field-1" placeholder="John" />
+                                <input type="text" class="form-control" id="field-1" placeholder="" />
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label for="field-2" class="control-label">Contact No</label>
-                                <input type="text" class="form-control" id="field-2" placeholder="Doe" />
+                                <input type="text" class="form-control" id="field-2" placeholder="" />
                             </div>
                         </div>
                     </div>
@@ -323,22 +325,77 @@
     <!-- Modal For Edit -->
 
     <!-- MOdal View Details -->
-    <div class="modal fade bs-example-modal-lg show" id="viewDetails" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" style="display: none; padding-right: 16px;" aria-modal="true">
+    <div class="modal fade bs-example-modal-lg show" id="viewDetailModal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" style="display: none; padding-right: 16px;" aria-modal="true">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h4 class="modal-title" id="myLargeModalLabel">Large modal</h4>
+                    <h4 class="modal-title" id="myLargeModalLabel">Request Information</h4>
+
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
                         ×
                     </button>
                 </div>
                 <div class="modal-body">
-                    ... sdzdfsdfsfs
+                    <div class="modal-body p-4">
+                        <div class="row">
+
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="field-2" class="control-label">Accout Number</label>
+                                    <input type="text" class="form-control" id="field-2" name="account_no" id="account_no" disabled>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="field-1" class="control-label">Balance</label>
+                                    <input type="text" class="form-control" id="field-1" name="balance" id="balance" disabled>
+
+
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="table-responsive">
+                            <table class="table table-bordered table-striped mb-0">
+                                <tbody>
+                                    <tr>
+                                        <th class="text-nowrap" style="font-size: 15px;" scope="row">Full Name</th>
+                                        <td colspan="5">
+                                            <input type="text" style="font-size: 15px;" class="form-control" id="field-1" name="fullname" id="fullname" disabled>
+
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+                                        <th class="text-nowrap" scope="row">Nestable</th>
+                                        <td colspan="5">Yes</td>
+                                    </tr>
+                                    <tr>
+                                        <th class="text-nowrap" scope="row">
+                                            <h5>Realese By: </h5>
+                                            <p class="realease_by"></p>
+                                        </th>
+                                        <td colspan="5">
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group no-margin">
+                                    <label for="field-7" class="control-label">Personal Info</label>
+                                    <textarea class="form-control" id="field-7" placeholder="Write something about yourself"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-light waves-effect" data-dismiss="modal">
                         Close
                     </button>
+                    <button type="button" class="btn btn-success waves-effect waves-light">Approve Request</button>
                 </div>
             </div>
             <!-- /.modal-content -->
@@ -360,6 +417,7 @@
     $(document).on("click", "#saveChangeStatus", function() {
         var id = $('#Edit-id').val();
         var status = $('#Edit-status').val();
+
         Swal.fire({
             title: 'Are you sure?',
             text: "You want to update the status?",
@@ -393,8 +451,39 @@
             }
         });
     });
-    $(document).on("click", "#viewUser", function() {
-        $("#viewDetails").modal("show");
+    $(document).on("click", "#viewDetail", function() {
+
+        var request_no = $(this).find('#detail-request_no').val();
+        $.ajax({
+            url: "{% url 'bond_fund:view-request' %}",
+            method: 'GET',
+            dataType: "JSON",
+            data: {
+                request_no: request_no,
+                _token: '{% csrf_token %}'
+            },
+            success: function(data) {
+
+                $('[name="fullname"]').val(data.fullname);
+                $('[name="transac_type"]').val(data.transac_type);
+                $('#request_no').val(data.request_no);
+                $('[name="transac_detail"]').val(data.transac_detail);
+                $('[name="amount"]').val(data.amount);
+                $('[name="remark"]').val(data.remark);
+                $('[name="realease_by"]').val(data.realease_by);
+                $('[name="account_no"]').val(data.account_no);
+                $('[name="date_created"]').val(data.date_created);
+                $('[name="balance"]').val(data.balance);
+                $('[name="employee_no"]').val(data.employee_no);
+                $('[name="company"]').val(data.company);
+                $('[name="position"]').val(data.position);
+                $('.realease_by').text(data.realease_by);
+                $("#viewDetailModal").modal("show");
+            },
+            error: function(jqXHR, textStatus, errorThrown) {
+                alert('Error get data from ajax');
+            }
+        });
     });
 
     $(document).on("click", "#requestTrash", function() {

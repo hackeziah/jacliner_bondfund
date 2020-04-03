@@ -75,14 +75,14 @@
                                             {% for item in data%}
                                             <tr>
                                                 <td>{{ item.id }}</td>
-                                                <td>{{ item.ttype }}</td>
+                                                <td>{{ item.ttype.name }}</td>
                                                 <td>{{ item.name }}</td>
                                                 <td>
                                                     <button type="button" id="updateTransaction" class="btn btn-info waves-effect waves-light" style="background:#49cd6e"><i class="mdi mdi-pencil"></i>
                                                         <input type="hidden" value="{{item.id }}" name="id"
                                                             id="modal-id">
                                                         <input type="hidden" id="modal-ttype" name="ttype"
-                                                            value="{{ item.ttype}}">
+                                                            value="{{ item.ttype.id}}">
                                                         <input type="hidden" id="modal-name" name="name"
                                                             value="{{item.name}}">
                                                     </button>
@@ -104,18 +104,27 @@
                         </div>
                         <!-- end col-->
                         <div class="col-4">
+
+
                             <div class="card">
                                 <div class="card-body">
 
-                                    <h4 class="header-title" style="font-size:20px;margin-bottom:20px">Add</h4>
-
+                                    <h4 class="header-title" style="font-size:20px;margin-bottom:20px">Assign Transaction
+                                    </h4>
 
                                     <form action="" method="POST" enctype="multipart/form-data">
                                         {% csrf_token %}
                                         <input type="hidden" name="_token" value="wlNcED0ca8631xFSXDPyhX027UqoYOTH3HN8xtCT">
                                         <div class="form-group">
                                             <label for="name">Transaction Type</label>
-                                            <input class="form-control" type="text" id="ttype" name="ttype" placeholder="Enter your Transaction Type">
+                                            <select name="ttype" class="form-control">
+                                                {% for item in data_trac %}
+                                                <option value="{{ item.id }}">
+                                                    {{ item.name }}
+                                                </option>
+                                                {% endfor %}
+                                            </select>
+
                                             <small id="helpId" class="text-muted">
                                                 <div style="color: red">
                                                     {{ transaction_form.ttype.errors }}
@@ -180,8 +189,37 @@
     {% include "layouts/js.html" %}
 
 
+    <div id="manageTransactionModal" class="modal fade show" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="display: none; padding-right: 16px;" aria-modal="true">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title" id="myModalLabel">Manage</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                </div>
+                <div class="modal-body">
+                    <div class="table-responsive"></div>
+                    <table class="table table-striped mb-0">
+                        {% for data in data_trac %}
+                        <tr>
+                            <td>{{ data.name }}</td>
 
+                            <td><button type="submit" class="btn btn-danger waves-effect">
+                                    <a href="{% url 'bond_fund:delete-ttype' data.id %}"
+                                        class="fa fa-trash"></button></a>
 
+                            </td>
+                            {% endfor %}
+                        </tr>
+                    </table>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <!-- <button type="button" id="editTransac" class="btn btn-primary waves-effect waves-light">Save
+                        changes</button> -->
+            </div>
+        </div>
+    </div>
+    </div>
     <!-- Modal For Edit -->
     <div id="updateTransactioinModal" class="modal fade show" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="display: none; padding-right: 16px;" aria-modal="true">
         <div class="modal-dialog">
@@ -193,7 +231,13 @@
                 <div class="modal-body">
                     <!-- <h6 id="Edit-ttype"></h6> -->
                     <div class="form-group">
-                        <input type="text" class="form-control" name="ttype" id="Edit-ttype" value="Edit-ttype">
+                        <select name="ttype" class="form-control" name="ttype" id="Edit-ttype" value="Edit-ttype">
+                            {% for item in data_trac %}
+                            <option selected="selected" value="{{ item.id }}">
+                                {{ item.name }}
+                            </option>
+                            {% endfor %}
+                        </select>
                     </div>
                     <div class="form-group">
                         <input type="text" class="form-control" name="name" id="Edit-name" value="Edit-name">
@@ -220,6 +264,15 @@
 
 </html>
 <script>
+    $(document).on('click', '#manageTransaction', function() {
+        $('#manageTransactionModal').modal('show');
+
+    });
+    $(document).on('click', '#trashType', function() {
+        var id = $(this).find('#ttypetrash').val();
+        alert(id)
+
+    });
     $(document).on('click', '#addUser', function() {
         $('#addUserModal').modal('show');
         $('#updateTransactioinModal').modal('show');
@@ -229,7 +282,7 @@
         $('#updateTransactioinModal').modal('show');
         $('#Edit-id').val($(this).find('#modal-id').val());
         $('#Edit-name').val($(this).find('#modal-name').val());
-        $('#Edit-ttype').val($(this).find('#modal-ttype').val());
+        $("#Edit-ttype").val($(this).find('#modal-ttype').val());
     });
     $(document).on('click', '#viewUser', function() {
         $('#viewDetails').modal('show');
@@ -237,9 +290,8 @@
 
     $(document).on('click', '#editTransac', function() {
         var id = $('#Edit-id').val();
-
         var name = $('#Edit-name').val();
-        var ttype = $('#Edit-ttype').val();
+        var ttype = $("#Edit-ttype").val();
         Swal.fire({
             title: 'Are you sure?',
             text: "You want to update this!",
