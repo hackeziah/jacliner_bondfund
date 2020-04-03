@@ -2,7 +2,7 @@ from django.shortcuts import render
 from django.urls import reverse, reverse_lazy
 from django.contrib.auth.decorators import login_required
 from account.models import Company, Position
-from bond_fund.models import TransactionType
+from bond_fund.models import TransactionType,TransacType
 from account.decorators import user_is_staff, user_is_user, user_is_admin
 from account.forms import CompanyForm, PositionForm
 from bond_fund.forms import TransactionManageForm
@@ -14,6 +14,7 @@ from django.http import JsonResponse
 
 @login_required(login_url=reverse_lazy('account:login'))
 def transaction_view(request):
+    data_trac = TransacType.objects.filter(trash=0)
     data = TransactionType.objects.filter(trash=0)
     contentheader = "Manage Transaction"
     title = "Maintenance Transaction"
@@ -21,8 +22,10 @@ def transaction_view(request):
     if request.method == 'POST':
         form = TransactionManageForm(request.POST)
         if form.is_valid():
+            trans = form.cleaned_data['ttype']
+            ttype = TransacType.objects.only('id').get(id=trans)
             data = TransactionType(
-                ttype=form.cleaned_data['ttype'],
+                ttype=ttype,
                 name=request.POST['name'],
                 trash=0,
             )
@@ -35,6 +38,7 @@ def transaction_view(request):
         'title': title,
         'contentheader': contentheader,
         'data': data,
+        'data_trac' : data_trac,
         'transaction_form': form
 
     }
@@ -57,10 +61,32 @@ def delete_transactionmanage(request):
 def edit_transactionmanage(request):
     if request.method == 'GET':
         id = request.GET.get('id', None)
+        ttype = request.GET.get('ttype', None)
+        ts = TransacType.objects.get(id=int(ttype))
         data = TransactionType.objects.get(id=int(id))
-        data.ttype = request.GET.get('ttype', None)
+        data.ttype = ts
         data.name = request.GET.get('name', None)
         data.save()
+    return HttpResponseRedirect('/transaction-setup')
+
+@login_required(login_url=reverse_lazy('account:login'))
+@user_is_admin
+def add_transactype(request):
+    if request.method == "POST":
+        data = TransacType(
+            name=request.POST['name'],
+            trash = 0
+        )
+        data.save()
+
+    return HttpResponseRedirect('/transaction-setup')
+
+@login_required(login_url=reverse_lazy('account:login'))
+@user_is_admin
+def delete_ttype(request,id):
+    data = TransacType.objects.get(id=int(id))
+    data.trash = 1
+    data.save()
     return HttpResponseRedirect('/transaction-setup')
 
 # All Company

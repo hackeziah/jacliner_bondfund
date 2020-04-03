@@ -6,6 +6,7 @@ from account.decorators import user_is_staff, user_is_user, user_is_admin
 
 
 @login_required(login_url=reverse_lazy('account:login'))
+@user_is_admin
 def all_transaction_view(request):
     title = 'All Transaction'
     contentheader = 'Manage All Transaction'
@@ -19,6 +20,7 @@ def all_transaction_view(request):
 
 
 @login_required(login_url=reverse_lazy('account:login'))
+@user_is_admin
 def deduction_transaction_view(request):
     title = 'All Deduction'
     contentheader = 'Manage All Deduction'
@@ -32,6 +34,7 @@ def deduction_transaction_view(request):
 
 
 @login_required(login_url=reverse_lazy('account:login'))
+@user_is_admin
 def saving_transaction_view(request):
     title = "Savings"
     contentheader = 'Manage Savings'
@@ -41,3 +44,18 @@ def saving_transaction_view(request):
 
     }
     return render(request, 'transaction/saving-transaction.html', context)
+
+
+@login_required(login_url=reverse_lazy('account:login'))
+@user_is_admin
+
+def transaction_item_view(request):
+    title = 'All Transaction'
+    contentheader = 'Manage All Transaction'
+
+    context = {
+        'title': title,
+        'contentheader': contentheader
+
+    }
+    return render(request, 'transaction/all-transaction.html', context)
