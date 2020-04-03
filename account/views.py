@@ -16,6 +16,10 @@ from django.contrib import messages
 
 
 def logout_view(request):
+    try:
+      del request.session['user']
+    except:
+      pass
     logout(request)
     return redirect('account:login')
 
@@ -32,6 +36,7 @@ def login_view(request):
             user = authenticate(email=email, password=password)
             if user:
                 login(request, user)
+                request.session['user'] = user.id
                 if user.is_admin == 1:
                     return redirect('account:admin-dashboard')
                 if user.is_user == 1:
