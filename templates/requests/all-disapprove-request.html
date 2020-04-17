@@ -60,10 +60,6 @@
                                     <div class="text-lg-right mt-3 mt-lg-0">
                                         <button type="submit" id="approveChecked" name="approveChecked" class="btn btn-success waves-effect waves-light">
                                             <i class="mdi mdi-thumb-up"></i> Aprrove</button><label> </label>
-                                        <button type="button" id="disapproveChecked" name="disapproveChecked" class="btn btn-danger waves-effect waves-light">
-                                            <i class="mdi mdi-thumb-down"></i> Disaprrove</button><label> </label>
-
-                                        </button>
                                         <label></label>
                                         <button type="button" id="trashChecked" name="trashChecked" class="btn btn-md btn-dark waves-effect waves-light float-right">
                                             <i class="mdi mdi-trash-can-outline"></i> Trash
@@ -91,11 +87,7 @@
 
                                             <tr>
                                                 <td>
-
-                                                    {% if item.status == 4 %}
-                                                    <label></label> {% else %}
-                                                    <input name="selector[]" id="checkbox" name="checkbox" type="checkbox" value="{{ item.id }}" /> {% endif %}
-
+                                                    <input name="selector[]" id="checkbox" name="checkbox" type="checkbox" value="{{ item.id }}" />
                                                 </td>
                                                 <td>{{ item.request_no|upper }}</td>
                                                 <td>{{ item.account_no|upper }}</td>
@@ -106,12 +98,9 @@
                                                     {% elif item.status == 1 %}
                                                     <span class="dtr-data"><span
                                                             class="btn btn-success btn-sm w-100">Approve</span></span>
-                                                    {% elif item.status == 2 %}
-                                                    <span class="dtr-data"><span
-                                                            class="btn btn-danger btn-sm w-100">Disapprove</span></span>
                                                     {% else %}
                                                     <span class="dtr-data"><span
-                                                            class="btn btn-dark btn-sm w-100">Done</span></span>
+                                                            class="btn btn-danger btn-sm w-100">Disapprove</span></span>
                                                     {% endif %}
                                                 </td>
 
@@ -124,37 +113,17 @@
                                                 </td>
 
                                                 <td>
-                                                    <div class="btn-group dropdown">
-                                                        <a href="javascript: void(0);" class="table-action-btn dropdown-toggle arrow-none btn btn-light btn-sm" data-toggle="dropdown" aria-expanded="false"><i
-                                                                class="mdi mdi-dots-horizontal"></i></a>
-                                                        <div class="dropdown-menu dropdown-menu-right" x-placement="bottom-end" style="
-                                  position: absolute;
-                                  will-change: transform;
-                                  top: 0px;
-                                  left: 0px;
-                                  transform: translate3d(38px, 28px, 0px);
-                                ">
-                                                            <a class="dropdown-item" href="#" id="viewDetail" data-toggle="modal" data-target="#con-close-modal"><i
-                                                                    class="mdi mdi-eye mr-2 text-muted font-18 vertical-middle"></i>
-                                                                <input type="hidden" value="{{item.id }}" name="id"
-                                                                    id="detail-id" />View
-                                                            </a>
+                                                    <button id="viewDetail" type="button" class="btn btn-info waves-effect waves-light" style="background:#49cd6e"><i class="la la-eye"></i>
+                                                        <input type="hidden" value="{{item.id }}" name="id"
+                                                            id="detail-id" />
+                                                    </button> |
 
-                                                            <a class="dropdown-item" href="#" id="chageStatus" data-toggle="modal" data-target="#con-close-modal"><i
-                                                                    class="mdi mdi-pencil mr-2 text-muted font-18 vertical-middle"></i>
-                                                                <input type="hidden" value="{{item.id }}"
-                                                                    name="request_id" id="modal-request_id" />
-                                                                <input type="hidden" value="{{item.status }}"
-                                                                    name="status" id="modal-status" />
-                                                                Change Status
-                                                            </a>
+                                                    <button id="requestTrash" type="button" class="btn btn-danger waves-effect waves-light" style="background:#ff0040" id="cancelOrder"><i
+                                                            class="la la la-trash"></i>
+                                                        <input type="hidden" id="trash-id" name="id"
+                                                            value="{{ item.id }}" /> </i>
+                                                    </button>
 
-                                                            <a class="dropdown-item" href="#" id="requestTrash"><i
-                                                                    class="mdi mdi-delete mr-2 text-muted font-18 vertical-middle">
-                                                                    <input type="hidden" id="trash-id" name="id"
-                                                                        value="{{ item.id }}" /> </i>Remove</a>
-                                                        </div>
-                                                    </div>
                                                 </td>
                                             </tr>
                                             {% endfor %}
@@ -201,7 +170,7 @@
                     <input type="hidden" name="id" id="Edit-id" />
                     <div class="form-group">
                         <select name="status" class="form-control" id="Edit-status">
-                            <option value="0">Pending</option>
+                            <option value="0">Select Status</option>
                             <option value="1">Approve</option>
                             <option value="2">Disapprove</option>
                         </select>
@@ -449,13 +418,6 @@
                     <button type="button" class="btn btn-light waves-effect" data-dismiss="modal">
                         Close
                     </button>
-                    <button type="button" id="approveRequest" class="btn btn-success waves-effect waves-light">
-                        Approve Request
-                    </button>
-                    <button type="submit" id="transactRequest" class="btn btn-info waves-effect waves-light">
-                        Processed to Transaction
-                    </button>
-
                 </div>
             </div>
             <!-- /.modal-content -->
@@ -475,17 +437,6 @@
             ],
         });
     });
-    $(document).on("click", "#transactRequest", function() {
-        var request_no = $("#request_no").val();
-        $.ajax({
-            url: 'create-transaction/' + request_no,
-            method: "GET",
-            success: function(data) {
-                window.location.href = "create-transaction/" + request_no;
-            },
-        });
-    });
-
     $(document).on("click", "#chageStatus", function() {
         $("#Edit-id").val($(this).find("#modal-request_id").val());
         $("#Edit-status").val($(this).find("#modal-status").val());
@@ -573,11 +524,6 @@
                     $("#transactRequest").hide();
 
                 }
-                if (data.status == 4) {
-                    $("#approveRequest").hide();
-                    $("#transactRequest").hide();
-                }
-
 
             },
             error: function(jqXHR, textStatus, errorThrown) {
@@ -686,27 +632,5 @@
                 });
             }
         });
-    });
-
-
-    $("#disapproveChecked").click(function() {
-        var val = [];
-        $(":checkbox:checked").each(function(i) {
-            val[i] = $(this).val();
-
-            $.ajax({
-                url: "{% url 'bond_fund:request-disapprove-checked' %}",
-                method: "GET",
-                data: {
-                    id: val[i],
-                },
-                success: function(data) {
-                    window.location.reload();
-                },
-            });
-
-
-        });
-
     });
 </script>
