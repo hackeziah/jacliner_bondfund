@@ -1,7 +1,7 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import authenticate
-from .models import UserAccount, Company, Position
+from .models import UserAccount, Company, Position,UserInfo
 
 
 class RegistrationForm(UserCreationForm):
@@ -46,6 +46,20 @@ class UserAccountAuthenticationForm(forms.ModelForm):
             password = self.cleaned_data['password']
             if not authenticate(email=email, password=password):
                 raise forms.ValidationError("Invalid login")
+
+# class RequestForm(forms.Form):
+#      emp_no = forms.CharField(required=True)
+#      email = forms.EmailField(required=True)
+#      balance = forms.FloatField(required=True)
+#      first_name = forms.CharField(required=True)
+#      last_name = forms.CharField(required=True)
+
+#      def clean_emp_no(self):
+#         try:
+#             UserInfo.objects.get(emp_no__iexact = self.cleaned_data['emp_no'],trash = 0)
+#         except UserInfo.DoesExist:
+#             raise forms.ValidationError(("This employee number is alreaedy exist"))
+
 
 # class UserAccountAuthenticationForm(forms.ModelForm):
 #     email = forms.EmailField()

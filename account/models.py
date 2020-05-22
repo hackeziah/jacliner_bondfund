@@ -12,7 +12,7 @@ class MyAccountManager(BaseUserManager):
             raise ValueError('Users must have a username')
 
         user = self.model(
-            email=self.normalize_email(email),
+            email = self.normalize_email(email),
             username=username,
             # is_user=1
         )
@@ -39,6 +39,21 @@ class MyAccountManager(BaseUserManager):
 
 
 class UserAccount(AbstractBaseUser):
+    Pending = 0
+    Activate  = 1
+    Deactivate  = 2
+
+    status_ch = (
+        (Pending, "Pending"),
+        (Activate, "Activate"),
+        (Deactivate, "Deactivate"),
+    )
+    status_role = (
+        (0, "Admin"),
+        (1, "Staff"),
+        (2, "User"),
+    )
+
     email = models.EmailField(verbose_name="email", max_length=60, unique=True)
     username = models.CharField(max_length=30, unique=True)
     date_joined = models.DateTimeField(
@@ -48,6 +63,10 @@ class UserAccount(AbstractBaseUser):
     is_user = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=False)
     is_active = models.BooleanField(default=True)
+    status = models.IntegerField(
+        verbose_name="Status", default=0,choices=status_ch)
+    role = models.IntegerField(
+        verbose_name="Status", default=0,choices=status_role)
     is_superuser = models.BooleanField(default=False)
 
     USERNAME_FIELD = 'email'
