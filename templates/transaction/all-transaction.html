@@ -60,68 +60,88 @@
                         <div class="col-12">
                             <div class="card">
                                 <div class="card-body">
-                                    <!-- <button type="button" class="btn btn-success waves-effect waves-light float-right" id="addUser" data-toggle="modal" data-target="#con-close-modal">Add
-                                        User</button> -->
+                                    <div class="row">
+                                        <div class="col-lg-6"></div>
+                                        <div class="col-lg-6">
+                                            <form class="form-inline" method="get">
+                                                <div class="form-group mx-sm-3">
+                                                    <label class="mr-2">Transaction:</label>
+                                                    <select name="ttype" class="custom-select">
+                                                        {% for item in myFilter.form.ttype %}
+                                                        {{ item }}
+                                                        {% endfor %}
+                                                    </select> &nbsp; &nbsp;
+                                                    <label class="mr-2">Type:</label>
+                                                    <select name="transaction_type" class="custom-select">
+                                                        {% for item in myFilter.form.transaction_type %}
+                                                        {{ item }}
+                                                        {% endfor %}
+                                                    </select>
+                                                </div>
+                                                <button type="submit" name="seachRequest" class="btn btn-danger waves-effect waves-light">
+                                                    <i class="mdi mdi-filter"></i>
+                                                    Filter</button>
+                                            </form>
+                                        </div>
+                                    </div>
                                     <h4 class="header-title" style="font-size: 20px; margin-bottom: 20px;">
                                         {{ contentheader }}
                                     </h4>
 
                                     <table id="datatable" class="table table-hover m-0 table-centered dt-responsive nowrap w-100">
-                                        <thead>
+                                        <thead style="background-color: #f3c4c4;">
                                             <tr>
-                                                <th width="15%">Transaction No</th>
-                                                <th width="10%">Account No</th>
-                                                <th width="10%">Status</th>
-                                                <th width="10%">Type</th>
-                                                <th width="10%">Last Balance</th>
-                                                <th width="10%">Amount</th>
-                                                <th width="10%">Current Balance</th>
-                                                <th width="10%">Date</th>
-                                                <th width="5%">Action</th>
+                                                <th width=" 15% ">Transaction No</th>
+                                                <th width="10% ">Account No</th>
+                                                <th width="10% ">Status</th>
+                                                <th width="10% ">Type</th>
+                                                <th width="10% ">Last Balance</th>
+                                                <th width="10% ">Amount</th>
+                                                <th width="10% ">Current Balance</th>
+                                                <th width="10% ">Date</th>
+                                                <th width="5% ">Action</th>
                                             </tr>
                                         </thead>
                                         <tbody>
                                             {% for item in data %}
-                                            <tr style="
-                            font-family: Arial;
-                          ">
-                                                <td style="color: red;">
+                                            <tr style=" font-family: Arial; ">
+                                                <td style="color: red; ">
                                                     {{ item.transaction_no }}
                                                 </td>
                                                 <td>{{ item.get_account_no }}</td>
                                                 <td>
                                                     {% if item.status == 0 %}
-                                                    <span class="dtr-data"><span
-                                                            class="btn btn-primary btn-sm w-100">Pending</span></span>
+                                                    <span class="dtr-data "><span
+                                                            class="btn btn-primary btn-sm w-100 ">Pending</span></span>
                                                     {% elif item.status == 1 %}
-                                                    <span class="dtr-data"><span
-                                                            class="btn btn-success btn-sm w-100">Approve</span></span>
+                                                    <span class="dtr-data "><span
+                                                            class="btn btn-success btn-sm w-100 ">Approve</span></span>
                                                     {% elif item.status == 2 %}
-                                                    <span class="dtr-data"><span
-                                                            class="btn btn-danger btn-sm w-100">Disapprove</span></span>
+                                                    <span class="dtr-data "><span
+                                                            class="btn btn-danger btn-sm w-100 ">Disapprove</span></span>
                                                     {% else %}
-                                                    <span class="dtr-data"><span
-                                                            class="btn btn-dark btn-sm w-100">Done</span></span>
+                                                    <span class="dtr-data "><span
+                                                            class="btn btn-dark btn-sm w-100 ">Done</span></span>
                                                     {% endif %}
                                                 </td>
                                                 <td>
                                                     {% if item.transaction_type.ttype.id == 1 %}
-                                                    <span class="dtr-data"><span
-                                                            class="badge badge-success">Saving</span></span>
+                                                    <span class="dtr-data "><span
+                                                            class="badge badge-success ">Saving</span></span>
                                                     {% else %}
-                                                    <span class="dtr-data"><span
-                                                            class="badge badge-danger">Deduction</span></span>
+                                                    <span class="dtr-data "><span
+                                                            class="badge badge-danger ">Deduction</span></span>
                                                     {% endif %}
                                                 </td>
-                                                <td style="font-size: large;">{{ item.last_balance }}</td>
-                                                <td style="font-size: large;">{{ item.amount }}</td>
-                                                <td style="font-size: large;">{{ item.current_balance }}</td>
+                                                <td style="font-size: large; ">₱ {{ item.last_balance }}</td>
+                                                <td style="font-size: large; ">₱ {{ item.amount }}</td>
+                                                <td style="font-size: large; ">₱ {{ item.current_balance }}</td>
                                                 <td>{{ item.date_created }}</td>
                                                 <td>
-                                                    <button type="button" id="viewTransac" class="btn btn-info waves-effect waves-light" style="background: #49cd6e;">
-                                                        <i class="fe-eye"></i>
-                                                        <input type="hidden" id="transaction-id" name="transaction_no"
-                                                            value="{{ item.id }}">
+                                                    <button type="button " id="viewTransac " class="btn btn-info waves-effect waves-light " style="background: #49cd6e; ">
+                                                        <i class="fe-eye "></i>
+                                                        <input type="hidden" id="transaction-id " name="transaction_no "
+                                                            value="{{ item.id }} ">
                                                     </button>
                                                 </td>
                                             </tr>
@@ -142,7 +162,7 @@
             <!-- content -->
 
             <!-- Footer Start -->
-            {% include "layouts/footer-admin.html" %}
+            {% include "layouts/footer-admin.html " %}
             <!-- end Footer -->
         </div>
 
@@ -153,69 +173,69 @@
     <!-- END wrapper -->
 
     <!-- Vendor js -->
-    {% include "layouts/js.html" %}
+    {% include "layouts/js.html " %}
     <!-- MOdal View Details -->
-    <div id="viewTransacModal" class="modal fade show" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="display: none; padding-right: 16px;" aria-modal="true">
-        <!-- <div class="modal fade bs-example-modal-lg show" id="viewDetailModal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" style="display: none; padding-right: 16px;" aria-modal="true"> -->
-        <div class="modal-dialog modal-lg">
-            <div class="modal-content">
-                <div class="modal-header" style="background-color: #da7557;">
-                    <h2> Transaction No: <label id="transaction_no"></label></h2>
-                    <h4 class="modal-title" id="myLargeModalLabel"></h4>
-                    <input type="hidden" id="request-id" name="request-id" />
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+    <div id="viewTransacModal " class="modal fade show " tabindex="-1 " role="dialog " aria-labelledby="myModalLabel " style="display: none; padding-right: 16px; " aria-modal="true ">
+        <!-- <div class="modal fade bs-example-modal-lg show " id="viewDetailModal " tabindex="-1 " role="dialog " aria-labelledby="myLargeModalLabel " style="display: none; padding-right: 16px; " aria-modal="true "> -->
+        <div class="modal-dialog modal-lg ">
+            <div class="modal-content ">
+                <div class="modal-header " style="background-color: #da7557; ">
+                    <h2> Transaction No: <label id="transaction_no "></label></h2>
+                    <h4 class="modal-title " id="myLargeModalLabel "></h4>
+                    <input type="hidden " id="request-id " name="request-id " />
+                    <button type="button " class="close " data-dismiss="modal " aria-hidden="true ">
                         ×
                     </button>
                 </div>
-                <div class="modal-body" style="padding: 0rem;">
-                    <div class="modal-body p-4">
-                        <div class="row">
-                            <div class="col-lg-12">
-                                <div id="invoice">
-                                    <div id="mid">
-                                        <div class="row">
-                                            <div class="col-lg-4">
-                                                <div class="info">
+                <div class="modal-body " style="padding: 0rem; ">
+                    <div class="modal-body p-4 ">
+                        <div class="row ">
+                            <div class="col-lg-12 ">
+                                <div id="invoice ">
+                                    <div id="mid ">
+                                        <div class="row ">
+                                            <div class="col-lg-4 ">
+                                                <div class="info ">
                                                     <h4>Transaction Info</h4>
                                                     <p>
-                                                        TTYPE : <label id="transac_type"></label>
+                                                        TTYPE : <label id="transac_type "></label>
                                                         </br>
                                                         Transaction :
-                                                        <label id="transac_detail"></label>
+                                                        <label id="transac_detail "></label>
                                                         </br>
                                                         Status :
-                                                        <span id="status-ok" class="badge badge-success">Done</span>
-                                                        <span id="status-not" class="badge badge-danger">Not yet
-                                                            done</span> </br>Request No. : <label id="request_no"></label>
+                                                        <span id="status-ok " class="badge badge-success ">Done</span>
+                                                        <span id="status-not " class="badge badge-danger ">Not yet
+                                                            done</span> </br>Request No. : <label id="request_no "></label>
 
                                                     </p>
                                                 </div>
                                             </div>
 
-                                            <div class="col-lg-4">
-                                                <div class="info">
+                                            <div class="col-lg-4 ">
+                                                <div class="info ">
                                                     <h4>Account Info</h4>
                                                     <p>
-                                                        Account No. : <label id="account_no"></label>
+                                                        Account No. : <label id="account_no "></label>
                                                         </br>
                                                     </p>
                                                     <p>
-                                                        Balance. : <label id="balance"></label>
+                                                        Balance. : <label id="balance "></label>
                                                         </br>
                                                     </p>
                                                 </div>
                                             </div>
 
-                                            <div class="col-lg-4">
-                                                <div class="info">
+                                            <div class="col-lg-4 ">
+                                                <div class="info ">
                                                     <h4>Contact Info</h4>
                                                     <p>
 
-                                                        Employee No.: <label id="employee_number"></label> </br> Name:
-                                                        <label class="employee_name"></label>
+                                                        Employee No.: <label id="employee_number "></label> </br> Name:
+                                                        <label class="employee_name "></label>
                                                         </br>
-                                                        Contact Number: <label id="mobile_number"></label></br>
-                                                        Company: <label id="company"></label> <br> Postion: <label id="position"></label>
+                                                        Contact Number: <label id="mobile_number "></label></br>
+                                                        Company: <label id="company "></label> <br> Postion: <label id="position "></label>
                                                         </br>
                                                     </p>
                                                 </div>
@@ -223,48 +243,50 @@
                                         </div>
                                     </div>
                                     <!--End Invoice Mid-->
-                                    <div class="row">
-                                        <div class="table-responsive">
-                                            <table class="table table-striped mb-0">
-                                                <thead>
-                                                    <tr>
-                                                        <th>Last Balance</th>
-                                                        <th>Amount</th>
-                                                        <th>Current Balance</th>
-                                                        <th>Date</th>
+                                    <div class="row ">
+                                        <div class="col-lg-12 ">
+                                            <div class="table-responsive ">
+                                                <table id="requestTable " class="table mb-0 ">
+                                                    <thead style="background-color: #23b397; ">
+                                                        <tr>
+                                                            <th>Last Balance</th>
+                                                            <th>Amount</th>
+                                                            <th>Current Balance</th>
+                                                            <th>Date</th>
 
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    <tr>
-                                                        <th id="last_balance"></th>
-                                                        <th id="amount"> </th>
-                                                        <th id="current_balance"></th>
-                                                        <th class="dtr-data" id="date_created"></th>
-                                                    </tr>
-                                                </tbody>
-                                            </table>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr>
+                                                            <td id="last_balance ">₱ </td>
+                                                            <td id="amount ">₱ </td>
+                                                            <td id="current_balance ">₱ </td>
+                                                            <td class="dtr-data " id="date_created "></td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
                                         </div>
                                     </div>
                                     <div>
                                         <br>
-                                        <div class="row">
+                                        <div class="row ">
                                             <!--End Table-->
 
-                                            <div id="legalcopy">
-                                                <label class="legal"><strong>Remarks</strong>  </label>
-                                                <label class="legal" id="remark">  </label>
+                                            <div id="legalcopy ">
+                                                <label class="legal "><strong>Remarks</strong>  </label>
+                                                <label class="legal " id="remark ">  </label>
 
                                             </div>
 
                                         </div>
 
-                                        <div class="row">
+                                        <div class="row ">
                                             <!--End Table-->
 
-                                            <div id="legalcopy">
-                                                <p class="legal"><strong>Realease By</strong>
-                                                    <label id="realease_by"></label>
+                                            <div id="legalcopy ">
+                                                <p class="legal "><strong>Realease By</strong>
+                                                    <label id="realease_by "></label>
                                                 </p>
                                             </div>
 
@@ -278,8 +300,8 @@
                         </div>
                     </div>
                 </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-light waves-effect" data-dismiss="modal">
+                <div class="modal-footer ">
+                    <button type="button " class="btn btn-light waves-effect " data-dismiss="modal ">
                         Close
                     </button>
                 </div>
@@ -294,68 +316,78 @@
 </html>
 <script>
     $(document).ready(function() {
-        $("#datatable").DataTable({
+        $("#transactionview ").DataTable();
+    });
+    $(document).ready(function() {
+        $("#datatable ").DataTable({
             order: [
-                [3, "desc"]
+                [3, "desc "]
             ],
         });
     });
-    $(document).on("click", "#addUser", function() {
-        $("#addUserModal").modal("show");
+    $(document).on("click ", "#addUser ", function() {
+        $("#addUserModal ").modal("show ");
     });
 
-    $(document).on("click", "#viewTransac", function() {
-        var transaction_id = $(this).find("#transaction-id").val();
+    $(document).on("click ", "#viewTransac ", function() {
+        var transaction_id = $(this).find("#transaction-id ").val();
         $.ajax({
-            url: "{% url 'bond_fund:view-transaction' %}",
-            method: "GET",
-            dataType: "JSON",
+            url: "{% url 'bond_fund:view-transaction' %} ",
+            method: "GET ",
+            dataType: "JSON ",
             data: {
                 transaction_id: transaction_id,
             },
             success: function(data) {
-
-                $("#transaction_no").text(data.transaction_no);
-                $("#amount").text(data.amount);
-                $("#last_balance").text(data.last_balance);
-                $("#current_balance").text(data.current_balance);
-                $("#remark").text(data.remark);
-                $("#status").text(data.status);
-                $("#realease_by").text(data.realease_by);
-                $("#date_created").text(data.date_created);
-                $("#transac_type").text(data.transac_type);
-                $("#account_no").text(data.account_no);
-                $("#transac_detail").text(data.transac_detail);
-                $("#company").text(data.company);
-                $("#request_no").text(data.request_no);
-                $("#position").text(data.position);
-                $("#employee_number").text(data.employee_number);
-                $(".employee_name").text(data.employee_name);
-                $("#mobile_number").text(data.mobile_number);
-                $("#balance").text(data.balance);
+                var date = new Date(data.date_created);
+                $("#transaction_no ").text(data.transaction_no);
+                $("#amount ").text(data.amount);
+                $("#last_balance ").text(data.last_balance);
+                $("#current_balance ").text(data.current_balance);
+                $("#remark ").text(data.remark);
+                $("#status ").text(data.status);
+                $("#realease_by ").text(data.realease_by);
+                $("#date_created ").text((date.getMonth() > 8 ?
+                        date.getMonth() + 1 :
+                        "0 " + (date.getMonth() + 1)) +
+                    "/ " +
+                    (date.getDate() > 9 ? date.getDate() : "0 " + date.getDate()) +
+                    "/ " +
+                    date.getFullYear()
+                );
+                $("#transac_type ").text(data.transac_type);
+                $("#account_no ").text(data.account_no);
+                $("#transac_detail ").text(data.transac_detail);
+                $("#company ").text(data.company);
+                $("#request_no ").text(data.request_no);
+                $("#position ").text(data.position);
+                $("#employee_number ").text(data.employee_number);
+                $(".employee_name ").text(data.employee_name);
+                $("#mobile_number ").text(data.mobile_number);
+                $("#balance ").text(data.balance);
 
                 if (data.status == 4) {
-                    $("#status-not").hide();
-                    $("#status-ok").show();
+                    $("#status-not ").hide();
+                    $("#status-ok ").show();
 
                 } else {
-                    $("#status-ok").hide();
-                    $("#status-not").show();
+                    $("#status-ok ").hide();
+                    $("#status-not ").show();
 
 
                 }
 
                 //if () -->
-                $("#viewTransacModal").modal("show")
+                $("#viewTransacModal ").modal("show ")
 
             },
             error: function(jqXHR, textStatus, errorThrown) {
-                alert("Error get data from ajax");
+                alert("Error get data from ajax ");
             },
         });
     });
 
-    $(document).on("click", "#viewUser", function() {
-        $("#viewDetails").modal("show");
+    $(document).on("click ", "#viewUser ", function() {
+        $("#viewDetails ").modal("show ");
     });
 </script>
