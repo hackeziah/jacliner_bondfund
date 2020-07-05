@@ -62,8 +62,8 @@
                                         {% for message in messages %}
                                         <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
                                             <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                        <span aria-hidden="true">×</span>
-                      </button> {{ message }}
+                                                <span aria-hidden="true">×</span>
+                                            </button> {{ message }}
                                         </div>
                                         {% endfor %}
                                     </div>
@@ -74,18 +74,20 @@
                                                 <div class="form-group mx-sm-3">
                                                     <label class="mr-2">Status:</label>
                                                     <select name="status" class="custom-select">
-                            {% for item in myFilter.form.status %} {{ item }}
-                            {% endfor %}
-                          </select>
+                                                        {% for item in myFilter.form.status %} {{ item }}
+                                                        {% endfor %}
+                                                    </select>
                                                 </div>
                                                 <button type="submit" name="seachRequest" class="btn btn-danger waves-effect waves-light">
-                          <i class="mdi mdi-filter"></i>
-                          Filter
-                        </button>
+                                                    <i class="mdi mdi-filter"></i>
+                                                    Filter
+                                                </button>
                                                 <label class="mr-2"></label>
-                                                <button type="button" class="btn btn-success waves-effect waves-light float-right" id="addUser" data-toggle="modal" data-target="#con-close-modal">
-                          Add
-                        </button>
+                                                <a href="{% url 'bond_fund:add-user' %}">
+                                                    <button type="button" class="btn btn-success waves-effect waves-light float-right" id="" data-toggle="modal" data-target="#con-close-modal">
+                                                        Add
+                                                    </button>
+                                                </a>
                                             </form>
                                         </div>
                                     </div>
@@ -132,9 +134,11 @@
                                                 </td>
                                                 {% endif %}
 
+
                                                 <td>
                                                     <div class="btn-group dropdown">
-                                                        <a href="javascript: void(0);" class="table-action-btn dropdown-toggle arrow-none btn btn-light btn-sm" data-toggle="dropdown" aria-expanded="false"><i class="mdi mdi-dots-horizontal"></i></a>
+                                                        <a href="javascript: void(0);" class="table-action-btn dropdown-toggle arrow-none btn btn-light btn-sm" data-toggle="dropdown" aria-expanded="false"><i
+                                                                class="mdi mdi-dots-horizontal"></i></a>
                                                         <div class="dropdown-menu dropdown-menu-right" x-placement="bottom-end" style="
                                   position: absolute;
                                   will-change: transform;
@@ -145,7 +149,7 @@
                                                             <a class="dropdown-item" href="#" id="viewUser" data-toggle="modal" data-target="#con-close-modal">
                                                                 <input type="hidden" value="{{ item.id }}" name="vid" id="vid" />
                                                                 <i class="mdi mdi-eye mr-2 text-muted font-18 vertical-middle">
-                                </i>View
+                                                                </i>View
                                                             </a>
 
                                                             <a class="dropdown-item" href="#" id="updateUser" data-toggle="modal" data-target="#con-close-modal">
@@ -154,12 +158,13 @@
                                                                 <input type="hidden" value="{{ item.empno.user.role }}" name="role" id="role" />
 
                                                                 <i class="mdi mdi-pencil mr-2 text-muted font-18 vertical-middle">
-                                </i>Edit
+                                                                </i>Edit
                                                             </a>
 
                                                             <a class="dropdown-item" href="#" id="deleteUser"><i
-                                  class="mdi mdi-delete mr-2 text-muted font-18 vertical-middle">
-                                  <input type="hidden" id="id" name="id" value="{{ item.id }}" /> </i>Remove</a>
+                                                                    class="mdi mdi-delete mr-2 text-muted font-18 vertical-middle">
+                                                                    <input type="hidden" id="id" name="id"
+                                                                        value="{{ item.id }}" /> </i>Remove</a>
                                                         </div>
                                                     </div>
                                                 </td>
@@ -195,148 +200,7 @@
     <!-- Vendor js -->
     {% include "layouts/js.html" %}
 
-    <div class="modal fade bs-example-modal show" id="addUserModal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true" style="display: none;">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header" style="background-color: #da7557;">
-                    <h4 class="modal-title">Register User</h4>
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
-            ×
-          </button>
-                </div>
-                <form action="/add-user" method="POST">
-                    {% csrf_token %}
-                    <div class="modal-body p-4">
-                        <div class="row">
-                            <div class="col-md-12">
-                                <div class="input-group">
-                                    <div class="input-group-prepend">
-                                        <button class="btn btn-primary waves-effect waves-light dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                      EMPLOYEE NUMBER
-                    </button>
-                                    </div>
-                                    <input type="text" class="form-control" name="emp_no" id="field-1" placeholder="Enter Employee Number" required />
-                                </div>
-                            </div>
-                        </div>
-                        <br />
-                        <br />
-                        <div class="row">
-                            <div class="col-md-12">
-                                <div class="input-group">
-                                    <div class="input-group-prepend">
-                                        <button class="btn btn-primary waves-effect waves-light dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                      BALANCE
-                    </button>
-                                    </div>
-                                    <input type="text" class="form-control" name="balance" id="field-1" placeholder="Set Balance" required />
-                                </div>
-                            </div>
-                        </div>
-                        <br />
-                        <br />
 
-                        <div class="row">
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label for="field-1" class="control-label">First Name</label>
-                                    <input name="first_name" type="text" class="form-control" id="field-1" placeholder="" required />
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label for="field-2" class="control-label">Last Name</label>
-                                    <input type="text" name="last_name" class="form-control" placeholder="" required />
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="row">
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label>Company</label> <br />
-                                    <select name="company" class="wide" data-plugin="customselect" style="display: none;" required>
-                    {% for item in company %}
-                    <option value="{{ item.id }}">{{ item.company_name }}</option>
-                    {% endfor %}
-                  </select>
-                                    <div class="nice-select wide" tabindex="0">
-                                        <span class="current">SELECT</span>
-                                        <ul class="list">
-                                            {% for item in company %}
-                                            <li data-value="{{ item.id }}" class="option">
-                                                {{ item.company_name }}
-                                            </li>
-
-                                            {% endfor %}
-                                        </ul>
-                                    </div>
-                                    <div class="clearfix"></div>
-                                </div>
-                            </div>
-
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label>Position</label> <br />
-                                    <select name="position" class="wide" data-plugin="customselect" style="display: none;" required>
-                    {% for item in position %}
-                    <option value="{{ item.id }}">{{ item.position_name }}</option>
-                    {% endfor %}
-                  </select>
-                                    <div class="nice-select wide" tabindex="0">
-                                        <span class="current">SELECT</span>
-
-                                        <ul class="list">
-                                            {% for item in position %}
-                                            <li data-value="{{ item.id }}" class="option">
-                                                {{ item.position_name }}
-                                            </li>
-
-                                            {% endfor %}
-                                        </ul>
-                                    </div>
-                                    <div class="clearfix"></div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="row">
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label for="" class="control-label">Email</label>
-                                    <input name="email" type="text" class="form-control" id="" placeholder="" required />
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label for="" class="control-label">Contact No</label>
-                                    <input name="mobile_number" type="text" class="form-control" id="" placeholder="" required />
-                                </div>
-                            </div>
-                        </div>
-                        <div class="form-group mb-0 text-center">
-                            {% for message in messages %}
-                            <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
-                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                  <span aria-hidden="true">×</span>
-                </button> {{ message }}
-                            </div>
-                            {% endfor %}
-                        </div>
-                    </div>
-
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary waves-effect" data-dismiss="modal">
-              Close
-            </button>
-                        <button type="submit" class="btn btn-info waves-effect waves-light">
-              Save
-            </button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
     <!-- Modal For Edit -->
     <div id="changeStatusModal" class="modal fade show" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="display: none; padding-right: 16px;" aria-modal="true">
         <div class="modal-dialog">
@@ -344,8 +208,8 @@
                 <div class="modal-header" style="background-color: #da7557;">
                     <h4 class="modal-title" id="myModalLabel">Edit</h4>
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
-            ×
-          </button>
+                        ×
+                    </button>
                 </div>
                 <div class="modal-body">
                     <input type="hidden" id="Edit-id" value="myid" />
@@ -353,27 +217,27 @@
 
                     <div class="form-group">
                         <select class="form-control" name="status" id="Edit-status">
-              <option value="0">Pending</option>
-              <option value="1">Active</option>
-              <option value="2">Diactived</option>
-            </select>
+                            <option value="0">Pending</option>
+                            <option value="1">Active</option>
+                            <option value="2">Diactived</option>
+                        </select>
                     </div>
                     <label for="" class="control-label">Change Role</label>
 
                     <div class="form-group">
                         <select class="form-control" name="role" id="Edit-role">
-              <option value="0">User</option>
-              <option value="1">Staff</option>
-            </select>
+                            <option value="0">User</option>
+                            <option value="1">Staff</option>
+                        </select>
                     </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-light waves-effect" data-dismiss="modal">
-            Close
-          </button>
+                        Close
+                    </button>
                     <button type="button" id="changeStatus" class="btn btn-primary waves-effect waves-light">
-            Save changes
-          </button>
+                        Save changes
+                    </button>
                 </div>
             </div>
             <!-- /.modal-content -->
@@ -389,31 +253,31 @@
                 <div class="modal-header" style="background-color: #da7557;">
                     <h4 class="modal-title" id="myLargeModalLabel">Information</h4>
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
-            ×
-          </button>
+                        ×
+                    </button>
                 </div>
                 <div class="modal-body">
                     <div class="row">
                         <div class="col-lg-4" style="font-size: large;">
                             <b>
-                <label for="">Account Number:</label>
+                                <label for="">Account Number:</label>
 
-                <p id="account_no"></p>
-              </b>
+                                <p id="account_no"></p>
+                            </b>
                         </div>
                         <div class="col-lg-4" style="font-size: large;">
                             <b>
-                <label for="">Name:</label>
+                                <label for="">Name:</label>
 
-                <p id="fullname"></p>
-              </b>
+                                <p id="fullname"></p>
+                            </b>
                         </div>
 
                         <div class="col-lg-4" style="font-size: large;">
                             <b>
-                <label for="">Balance: </label>
-                <p id="balance">₱</p>
-              </b>
+                                <label for="">Balance: </label>
+                                <p id="balance">₱</p>
+                            </b>
                         </div>
                     </div>
                     &nbsp;
@@ -462,8 +326,8 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-light waves-effect" data-dismiss="modal">
-            Close
-          </button>
+                        Close
+                    </button>
                 </div>
             </div>
             <!-- /.modal-content -->
@@ -482,9 +346,7 @@
             ],
         });
     });
-    $(document).on("click", "#addUser", function() {
-        $("#addUserModal").modal("show");
-    });
+
     $(document).on("click", "#updateUser", function() {
         $("#changeStatusModal").modal("show");
 
