@@ -14,20 +14,19 @@ from .models import UserAccount, UserInfo
 from django.contrib import messages
 from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
 
+
 def logout_view(request):
     try:
-      del request.session['user']
+        del request.session['user']
     except:
-      pass
+        pass
     logout(request)
     return redirect('account:login')
 
 
-# @login_required(login_url=reverse_lazy('account:login'))
-
 def login_view(request):
     context = {}
-    user = request.user # paalam kung ano kung sino ung user na to
+    user = request.user  # paalam kung ano kung sino ung user na to
     if request.POST:
         form = UserAccountAuthenticationForm(request.POST)
         if form.is_valid:
@@ -40,10 +39,10 @@ def login_view(request):
                 if user.status == 1:
                     if user.is_admin == 1:
                         return redirect('account:admin-dashboard')
-                    if user.is_user == 1:
-                            return redirect('account:user-dashboard')
-                    if user.is_staff == 1:
-                            return redirect('account:staff-dashboard')
+                    if user.role == 0:
+                        return redirect('bond_fund:user-dashboard')
+                    if user.role == 1:
+                        return redirect('bond_fund:staff-dashboard')
                 else:
                     return render(request, 'accounts/login.html', {'error_message': 'Your account has been disabled please just with the approval of account'})
     else:
@@ -81,42 +80,19 @@ def codeGenerator():
     return finalramdom
 
 
-
-
 @login_required(login_url=reverse_lazy('account:login'))
 @user_is_admin
 def admin_dashboard_view(request):
-    title = "Dashboard"
-    contentheader = 'Dashboard'
-    context = {
-        'title': title,
-        'contentheader': contentheader
-
-    }
-    return render(request, 'transaction/dashboard.html', context)
+    return HttpResponseRedirect('dashboard')
 
 
-@login_required(login_url=reverse_lazy('account:login'))
-@user_is_user
-def user_dashboard_view(request):
-    title = "User-Dashboard"
-    contentheader = 'Dashboard'
-    context = {
-        'title': title,
-        'contentheader': contentheader
-
-    }
-    return render(request, 'user/dashboard.html', context)
+# @login_required(login_url=reverse_lazy('account:login'))
+# @user_is_user
+# def user_dashboard_view(request):
+#     return HttpResponseRedirect('user-dashboard')
 
 
-@login_required(login_url=reverse_lazy('account:login'))
-@user_is_staff
-def staff_dashboard_view(request):
-    title = "Staff Dashboard"
-    contentheader = 'Dashboard'
-    context = {
-        'title': title,
-        'contentheader': contentheader
-
-    }
-    return render(request, 'staff/dashboard.html', context)
+# @login_required(login_url=reverse_lazy('account:login'))
+# @user_is_staff
+# def staff_dashboard_view(request):
+#     return HttpResponseRedirect('staff-dashboard')

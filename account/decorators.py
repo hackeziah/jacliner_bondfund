@@ -14,18 +14,6 @@ def unthentication_user(view_func):
     return wrap
 
 
-# def userpermission(function):
-#     def wrap(request, *args, **kwargs):
-#         user = request.user
-#         if user.is_user == 1:
-#             return redirect('bond_fund:user-dashboard')
-#         if user.is_admin == 1:
-#             return redirect('bond_fund:dashboard')
-#         if user.is_staff == 1:
-#             return redirect('bond_fund:staff-dashboard')
-#     return wrap
-
-
 def user_is_admin(function):
     def wrap(request, *args, **kwargs):
         user = request.user
@@ -37,10 +25,10 @@ def user_is_admin(function):
     return wrap
 
 
-def user_is_staff(function):
+def user_is_user(function):
     def wrap(request, *args, **kwargs):
         user = request.user
-        if user.is_staff == 1:
+        if user.role == 0:
             return function(request, *args, **kwargs)
         else:
             raise PermissionDenied
@@ -48,10 +36,10 @@ def user_is_staff(function):
     return wrap
 
 
-def user_is_user(function):
+def user_is_staff(function):
     def wrap(request, *args, **kwargs):
         user = request.user
-        if user.is_user == 1:
+        if user.role == 1:
             return function(request, *args, **kwargs)
         else:
             raise PermissionDenied

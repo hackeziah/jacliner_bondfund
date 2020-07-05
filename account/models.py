@@ -12,7 +12,7 @@ class MyAccountManager(BaseUserManager):
             raise ValueError('Users must have a username')
 
         user = self.model(
-            email = self.normalize_email(email),
+            email=self.normalize_email(email),
             username=username,
             # is_user=1
         )
@@ -28,7 +28,6 @@ class MyAccountManager(BaseUserManager):
             username=username,
         )
         user.is_admin = True
-        user.is_staff = True
         user.is_superuser = True
         user.is_user = True
         user.save(using=self._db)
@@ -40,8 +39,8 @@ class MyAccountManager(BaseUserManager):
 
 class UserAccount(AbstractBaseUser):
     Pending = 0
-    Activate  = 1
-    Deactivate  = 2
+    Activate = 1
+    Deactivate = 2
 
     status_ch = (
         (Pending, "Pending"),
@@ -49,9 +48,9 @@ class UserAccount(AbstractBaseUser):
         (Deactivate, "Deactivate"),
     )
     status_role = (
-        (0, "Admin"),
+        (0, "User"),
         (1, "Staff"),
-        (2, "User"),
+        (2, "Adimin"),
     )
 
     email = models.EmailField(verbose_name="email", max_length=60, unique=True)
@@ -60,13 +59,11 @@ class UserAccount(AbstractBaseUser):
         verbose_name='date joined', auto_now_add=True)
     last_login = models.DateTimeField(verbose_name='last login', auto_now=True)
     is_admin = models.BooleanField(default=False)
-    is_user = models.BooleanField(default=True)
-    is_staff = models.BooleanField(default=False)
     is_active = models.BooleanField(default=True)
     status = models.IntegerField(
-        verbose_name="Status", default=0,choices=status_ch)
+        verbose_name="Status", default=0, choices=status_ch)
     role = models.IntegerField(
-        verbose_name="Status", default=0,choices=status_role)
+        verbose_name="Status", default=0, choices=status_role)
     is_superuser = models.BooleanField(default=False)
 
     USERNAME_FIELD = 'email'
@@ -92,7 +89,6 @@ class Company(models.Model):
     description = models.CharField(
         verbose_name="Company Description", max_length=50, default="")
     trash = models.BooleanField(verbose_name="Trash", default=0)
-
 
     def __str__(self):
         return self.company_name
