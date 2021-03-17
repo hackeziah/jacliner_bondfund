@@ -7,32 +7,24 @@
     <meta charset="utf-8" />
     <title>{{title}}</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta content="A fully featured admin theme which can be used to build CRM, CMS, etc." name="description" />
+    <meta content="A fully featured user theme which can be used to build CRM, CMS, etc." name="description" />
     <meta content="Coderthemes" name="author" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <!-- App favicon -->
     {% include "layouts/links.html" %}
 </head>
-<style>
-
-</style>
 
 <body>
     <!-- Begin page -->
     <div id="wrapper">
         <!-- Topbar Start -->
-        {% include "layouts/top-admin.html" %}
+        {% include "user/layouts/top-user.html" %}
         <!-- end Topbar -->
 
         <!-- ========== Left Sidebar Start ========== -->
-        {% include 'layouts/sidebar-admin.html' %}
+        {% include 'user/layouts/sidebar-user.html' %}
 
         <!-- Left Sidebar End -->
-
-        <!-- ============================================================== -->
-        <!-- Start Page Content here -->
-        <!-- ============================================================== -->
-
         <div class="content-page">
             <div class="content">
                 <!-- Start Content-->
@@ -158,7 +150,7 @@
             <!-- content -->
 
             <!-- Footer Start -->
-            {% include "layouts/footer-admin.html" %}
+            {% include "layouts/footer.html" %}
             <!-- end Footer -->
         </div>
 
@@ -194,7 +186,7 @@
                                                 <div class="info">
                                                     <h4>Transaction Info</h4>
                                                     <p>
-                                                        TTYPE : <label id="transac_type"></label>
+                                                        T-TYPE : <label id="transac_type"></label>
                                                         </br>
                                                         Transaction :
                                                         <label id="transac_detail"></label>
@@ -241,26 +233,27 @@
                                     <!--End Invoice Mid-->
                                     <div class="row">
                                         <div class="table-responsive">
-                                            <table id="transactionview" class="table table-striped mb-0">
-                                                <thead>
+                                            <table id="trasactionTable" class="table mb-0">
+                                                <thead id="my-head">
                                                     <tr>
                                                         <th>Last Balance</th>
                                                         <th>Amount</th>
                                                         <th>Current Balance</th>
                                                         <th>Date</th>
-
                                                     </tr>
                                                 </thead>
-                                                <tbody>
+                                                <tbody id="">
                                                     <tr>
                                                         <th id="last_balance">₱ </th>
                                                         <th id="amount">₱ </th>
                                                         <th id="current_balance">₱ </th>
-                                                        <th class="dtr-data" id="date_created"></th>
+                                                        <th class="dtr-data" id="date_created">
+                                                        </th>
                                                     </tr>
                                                 </tbody>
                                             </table>
                                         </div>
+
                                     </div>
                                     <div>
                                         <br>
@@ -333,7 +326,7 @@
                 transaction_id: transaction_id,
             },
             success: function(data) {
-
+                var date = new Date(data.date_created);
                 $("#transaction_no").text(data.transaction_no);
                 $("#amount").text(data.amount);
                 $("#last_balance").text(data.last_balance);
@@ -341,7 +334,14 @@
                 $("#remark").text(data.remark);
                 $("#status").text(data.status);
                 $("#realease_by").text(data.realease_by);
-                $("#date_created").text(data.date_created);
+                $("#date_created").text(
+                    (date.getMonth() > 8 ?
+                        date.getMonth() + 1 :
+                        "0" + (date.getMonth() + 1)) +
+                    "/" +
+                    (date.getDate() > 9 ? date.getDate() : "0" + date.getDate()) +
+                    "/" +
+                    date.getFullYear());
                 $("#transac_type").text(data.transac_type);
                 $("#account_no").text(data.account_no);
                 $("#transac_detail").text(data.transac_detail);
@@ -353,7 +353,14 @@
                 $("#mobile_number").text(data.mobile_number);
                 $("#balance").text(data.balance);
 
-                if (data.status == 4) {
+                if (data.transac_type == "Saving") {
+                    $("#my-head").css("background-color", "#23b39");
+
+                } else {
+                    $("#my-head").css("background-color", "#f0643b");
+                }
+
+                if (data.status = 4) {
                     $("#status-not").hide();
                     $("#status-ok").show();
 

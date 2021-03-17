@@ -1,0 +1,129 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset='utf-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <title>{{ title }}</title>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <link rel='stylesheet' type='text/css' media='screen' href='main.css'>
+    <script src='main.js'></script>
+    {% include "layouts/links.html" %}
+
+    <head>
+        <style>
+            table {
+                width: 100%;
+                border-collapse: separate;
+                border-spacing: 4px;
+            }
+            
+            table,
+            th,
+            td {
+                border: 1px solid black;
+            }
+            
+            th {
+                padding: 5px;
+                text-align: center;
+            }
+            
+            td {
+                border: 1px solid #c6c7cc;
+                padding: 5px 5px;
+            }
+            
+            table#t01 tr:nth-child(even) {
+                background-color: #eee;
+            }
+            
+            table#t01 tr:nth-child(odd) {
+                background-color: #fff;
+            }
+            
+            table#t01 th {
+                background-color: black;
+                color: white;
+            }
+            
+            @page {
+                size: a4 portrait;
+                @frame header_frame {
+                    /* Static Frame */
+                    -pdf-frame-content: header_content;
+                    left: 50pt;
+                    width: 512pt;
+                    top: 50pt;
+                    height: 40pt;
+                }
+                @frame content_frame {
+                    /* Content Frame */
+                    left: 50pt;
+                    width: 512pt;
+                    top: 90pt;
+                    height: 632pt;
+                }
+                @frame footer_frame {
+                    /* Another static Frame */
+                    -pdf-frame-content: footer_content;
+                    left: 50pt;
+                    width: 512pt;
+                    top: 772pt;
+                    height: 20pt;
+                }
+            }
+        </style>
+    </head>
+
+    <body>
+        <div id="header_content">
+            <h1> {{ title }}</h1>
+
+        </div>
+
+
+
+        <div id="footer_content">(c) - page
+            <pdf:pagenumber>
+                of
+                <pdf:pagecount> | Date Realese: {{ date }}
+        </div>
+
+
+        <table id="t01">
+            <tr>
+                {% for item in thead %}
+                <th>{{ item }}</th>
+                {% endfor %}
+
+            </tr>
+            {% for item in objects %}
+            <tr>
+                <td style="background-color: cornflowerblue;" width="20%">{{ item.request_no }}</td>
+                <td>{{ item.amount }}</td>
+                <td>{{ item.transactionttype }}</td>
+
+                {% if item.status == 0 %}
+                <td style="background-color: cornflowerblue;" width="20%">Pending</td>
+                {% elif item.status == 1 %}
+                <td style="background-color: green;" width="20%">Approve</td>
+                {% elif item.status == 2 %}
+                <td style="background-color: tomato;" width="20%">Denied</td>
+                {% else %}
+                <td style="background-color: yellowgreen;" width="20%">Done</td>
+                {% endif %}
+
+                <td>{{ item.clerk }}</td>
+                <td>{{ item.date_created }}</td>
+
+
+            </tr>
+            {% endfor %}
+
+        </table>
+
+    </body>
+
+</html>

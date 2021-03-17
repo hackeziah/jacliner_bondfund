@@ -2,7 +2,7 @@ from django.shortcuts import render
 from django.urls import reverse, reverse_lazy
 from django.contrib.auth.decorators import login_required
 from account.models import Company, Position
-from bond_fund.models import TransactionType,TransacType
+from bond_fund.models import TransactionType, TransacType
 from account.decorators import user_is_staff, user_is_user, user_is_admin
 from account.forms import CompanyForm, PositionForm
 from bond_fund.forms import TransactionManageForm
@@ -38,7 +38,7 @@ def transaction_view(request):
         'title': title,
         'contentheader': contentheader,
         'data': data,
-        'data_trac' : data_trac,
+        'data_trac': data_trac,
         'transaction_form': form
 
     }
@@ -69,21 +69,23 @@ def edit_transactionmanage(request):
         data.save()
     return HttpResponseRedirect('/transaction-setup')
 
+
 @login_required(login_url=reverse_lazy('account:login'))
 @user_is_admin
 def add_transactype(request):
     if request.method == "POST":
         data = TransacType(
             name=request.POST['name'],
-            trash = 0
+            trash=0
         )
         data.save()
 
     return HttpResponseRedirect('/transaction-setup')
 
+
 @login_required(login_url=reverse_lazy('account:login'))
 @user_is_admin
-def delete_ttype(request,id):
+def delete_ttype(request, id):
     data = TransacType.objects.get(id=int(id))
     data.trash = 1
     data.save()
@@ -142,7 +144,6 @@ def add_company(request):
 # Delete Company
 @login_required(login_url=reverse_lazy('account:login'))
 @user_is_admin
-
 def delete_company(request):
     if request.GET:
         id = request.GET['id']

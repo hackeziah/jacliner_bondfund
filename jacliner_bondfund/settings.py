@@ -40,9 +40,12 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django_mysql',
-
+    'rest_framework',
+    # install
+    'django_filters',
     'bond_fund',
-    'account'
+    'account',
+    'chartjs',
 
 ]
 
@@ -92,10 +95,20 @@ DATABASES = {
         'OPTIONS': {
             'init_command': "SET sql_mode='STRICT_TRANS_TABLES', innodb_strict_mode=1",
             'sql_mode': 'traditional',
-            'charset': 'utf8mb4',
+            'charset': 'utf8',
         },
     }
 }
+
+# CREATE DATABASE < dbname > CHARACTER SET utf8
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = '587'
+EMAIL_HOST_USER = 'bondfundminisystem@gmail.com'
+EMAIL_HOST_PASSWORD = 'b0ndfundsys'
+EMAIL_USE_TLS = True
+EMAIL_USE_SSL = False
 
 # Password validation
 # https://docs.djangoproject.com/en/3.0/ref/settings/#auth-password-validators
@@ -118,16 +131,15 @@ AUTH_PASSWORD_VALIDATORS = [
 
 # Internationalization
 # https://docs.djangoproject.com/en/3.0/topics/i18n/
-
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Asia/Manila'
 
 USE_I18N = True
 
 USE_L10N = True
 
-USE_TZ = True
+USE_TZ = False
 
 
 # Static files (CSS, JavaScript, Images)

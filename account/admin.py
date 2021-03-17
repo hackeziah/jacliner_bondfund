@@ -5,7 +5,7 @@ from .models import UserAccount, MyAccountManager, UserInfo, Position, Company
 
 class AccountAdmin(UserAdmin):
     list_display = ('id', 'email', 'username', 'date_joined',
-                    'last_login', 'is_admin', 'is_staff', 'is_user')
+                    'last_login', 'is_admin',)
     search_fields = ('email', 'username',)
     readonly_fields = ('date_joined', 'last_login')
     filter_horizontal = ()

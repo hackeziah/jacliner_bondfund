@@ -62,8 +62,8 @@
                                     <h4 class="header-title" style="font-size:20px;margin-bottom:20px">
                                         {{ contentheader }}</h4>
 
-                                    <table id="basic-datatable" class="table table-hover m-0 table-centered dt-responsive nowrap w-100">
-                                        <thead>
+                                    <table id="datatable" class="table table-hover m-0 table-centered dt-responsive nowrap w-100">
+                                        <thead style="background-color: #f3c4c4;">
                                             <tr>
                                                 <th width="15%">ID</th>
                                                 <th width="35%">Company Name</th>
@@ -219,6 +219,13 @@
 
 </html>
 <script>
+    $(document).ready(function() {
+        $("#datatable").DataTable({
+            order: [
+                [3, "desc"]
+            ],
+        });
+    });
     $(document).on('click', '#addUser', function() {
         $('#addUserModal').modal('show');
         $('#updateCompanyModal').modal('show');

@@ -84,15 +84,18 @@
 
                                                 <div class="col-lg-4">
                                                     <label for="location">Select Transaction</label>(<span style=" color: red; ">Required</span>)
-                                                    <select name="transaction_id" class="form-control">
-                                                        <option>
-                                                            <span style="color: red;">Savings</span></option>
+                                                    <select name="transaction_id" class="form-control" required>
+                                                        <option style="color: red;">
+                                                            Select Transaction</option>
+                                                        <option style="color:red;">
+                                                            Savings
+                                                        </option>
                                                         {% for item in savings %}
                                                         <option value="{{ item.id }}"> &nbsp;&nbsp;&nbsp;{{ item.name }}
                                                         </option>
                                                         {% endfor %}
-                                                        <option>
-                                                            <span style="color: red;">Deduction</span>
+                                                        <option style="color: red;">
+                                                            <span>Deduction</span>
                                                         </option>
                                                         {% for item in deduction %}
                                                         <option value="{{ item.id }}">
@@ -100,11 +103,12 @@
                                                         </option>
                                                         {% endfor %}
                                                     </select>
+
                                                 </div>
 
                                                 <div class=" col-lg-4 ">
                                                     <label for=" location ">Enter Amount</label>
-                                                    <input type=" text " class=" form-control " id=" amount " name=" amount " placeholder=" Enter amount " />
+                                                    <input type=" text " class=" form-control " id="amount" name="amount" placeholder=" Enter amount " />
                                                     <small id=" helpId " class=" text-muted ">
                                                         <div style=" color: red ">
                                                             {{ request_form.amount.errors }}
@@ -156,67 +160,6 @@
 
     <!-- Vendor js -->
     {% include "layouts/js.html " %}
-
-    <!-- Modal For Edit -->
-    <div id=" updateStatusModal " class=" modal fade show " tabindex=" -1 " role=" dialog " aria-labelledby=" myModalLabel " style=" display: none; padding-right: 16px; " aria-modal=" true ">
-        <div class=" modal-dialog ">
-            <div class=" modal-content ">
-                <div class=" modal-header ">
-                    <h4 class=" modal-title " id=" myModalLabel ">Change Status</h4>
-                    <button type=" button " class=" close " data-dismiss=" modal " aria-hidden=" true ">
-                        ×
-                    </button>
-                </div>
-                <div class=" modal-body ">
-                    <input type=" hidden " name=" id " id=" Edit-id " />
-
-                    <div class=" form-group ">
-                        <select name=" status " class=" form-control " id=" Edit-status ">
-                            <option value=" 0 ">Pending</option>
-                            <option value=" 1 ">Approve</option>
-                            <option value=" 2 ">Block</option>
-                        </select>
-                    </div>
-                </div>
-                <div class=" modal-footer ">
-                    <button type=" button " class=" btn btn-light waves-effect " data-dismiss=" modal ">
-                        Close
-                    </button>
-                    <button type=" submit " class=" btn btn-primary waves-effect waves-light " id=" saveChangeStatus ">
-                        Save changes
-                    </button>
-                </div>
-            </div>
-            <!-- /.modal-content -->
-        </div>
-        <!-- /.modal-dialog -->
-    </div>
-    <!-- Modal For Edit -->
-
-    <!-- MOdal View Details -->
-    <div class=" modal fade bs-example-modal-lg show " id=" viewDetails " tabindex=" -1 " role=" dialog " aria-labelledby=" myLargeModalLabel " style=" display: none; padding-right: 16px; " aria-modal=" true ">
-        <div class=" modal-dialog modal-lg ">
-            <div class=" modal-content ">
-                <div class=" modal-header ">
-                    <h4 class=" modal-title " id=" myLargeModalLabel ">Large modal</h4>
-                    <button type=" button " class=" close " data-dismiss=" modal " aria-hidden=" true ">
-                        ×
-                    </button>
-                </div>
-                <div class=" modal-body ">
-                    ... sdzdfsdfsfs
-                </div>
-                <div class=" modal-footer ">
-                    <button type=" button " class=" btn btn-light waves-effect " data-dismiss=" modal ">
-                        Close
-                    </button>
-                </div>
-            </div>
-            <!-- /.modal-content -->
-        </div>
-        <!-- /.modal-dialog -->
-    </div>
-    <!-- MOdal View Details -->
 </body>
 
 </html>

@@ -21,11 +21,11 @@
     <!-- Begin page -->
     <div id="wrapper">
         <!-- Topbar Start -->
-        {% include "layouts/top-admin.html" %}
+        {% include "user/layouts/top-user.html" %}
         <!-- end Topbar -->
 
         <!-- ========== Left Sidebar Start ========== -->
-        {% include 'layouts/sidebar-admin.html' %}
+        {% include 'user/layouts/sidebar-user.html' %}
 
         <!-- Left Sidebar End -->
 
@@ -78,6 +78,7 @@
                                             </form>
                                         </div>
                                     </div>
+
                                     <h4 class="header-title" style="font-size: 20px; margin-bottom: 20px;">
                                         {{ contentheader }}
                                     </h4>
@@ -158,7 +159,7 @@
             <!-- content -->
 
             <!-- Footer Start -->
-            {% include "layouts/footer-admin.html" %}
+            {% include "user/layouts/footer-user.html" %}
             <!-- end Footer -->
         </div>
 
@@ -241,17 +242,16 @@
                                     <!--End Invoice Mid-->
                                     <div class="row">
                                         <div class="table-responsive">
-                                            <table id="transactionview" class="table table-striped mb-0">
-                                                <thead>
+                                            <table id="trasactionTable" class="table mb-0">
+                                                <thead style="background-color: #f0643b;">
                                                     <tr>
                                                         <th>Last Balance</th>
                                                         <th>Amount</th>
                                                         <th>Current Balance</th>
                                                         <th>Date</th>
-
                                                     </tr>
                                                 </thead>
-                                                <tbody>
+                                                <tbody id="">
                                                     <tr>
                                                         <th id="last_balance">₱ </th>
                                                         <th id="amount">₱ </th>
@@ -261,6 +261,8 @@
                                                 </tbody>
                                             </table>
                                         </div>
+
+
                                     </div>
                                     <div>
                                         <br>
@@ -333,7 +335,7 @@
                 transaction_id: transaction_id,
             },
             success: function(data) {
-
+                var date = new Date(data.date_created);
                 $("#transaction_no").text(data.transaction_no);
                 $("#amount").text(data.amount);
                 $("#last_balance").text(data.last_balance);
@@ -341,7 +343,14 @@
                 $("#remark").text(data.remark);
                 $("#status").text(data.status);
                 $("#realease_by").text(data.realease_by);
-                $("#date_created").text(data.date_created);
+                $("#date_created").text(
+                    (date.getMonth() > 8 ?
+                        date.getMonth() + 1 :
+                        "0" + (date.getMonth() + 1)) +
+                    "/" +
+                    (date.getDate() > 9 ? date.getDate() : "0" + date.getDate()) +
+                    "/" +
+                    date.getFullYear());
                 $("#transac_type").text(data.transac_type);
                 $("#account_no").text(data.account_no);
                 $("#transac_detail").text(data.transac_detail);

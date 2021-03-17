@@ -16,6 +16,16 @@ from account.forms import CompanyForm, PositionForm
 from account.models import Company, Position, UserAccount, UserInfo
 from bond_fund.forms import RequestForm, TransactionManageForm
 from bond_fund.models import Account, Requests, TransactionType, TransacType
+from bond_fund.serializers import RequestsSerializer
+from rest_framework.generics import (
+    ListAPIView,
+    CreateAPIView,
+    RetrieveAPIView,
+    ListCreateAPIView,
+    RetrieveUpdateAPIView,
+    DestroyAPIView,
+    UpdateAPIView
+)
 
 
 def load_transaction(request,id):
@@ -82,6 +92,14 @@ def all_disapprove_view(request):
     return render(request,template,content)
 
 
+# view-status-request -filter
+def view_status_request(request):
+    status = request.GET.get('status', None)
+    data = Requests.objects.filter(status = int(status))
+    data = list(data.values())
+    return JsonResponse(data, safe=False)
+
+
 def view_request(request):
     if request.method == "GET":
         id = request.GET.get('id', None)
@@ -128,6 +146,7 @@ def change_request_status(request):
 @login_required(login_url=reverse_lazy('account:login'))
 @user_is_admin
 def request_approve_checked(request):
+
     if request.GET:
         id = request.GET['id']
         data = Requests.objects.get(id=int(id))
@@ -188,7 +207,10 @@ def add_request(request):
                 remark = request.POST['remark'],
                 trash=0,
                 clerk= fullname,
-                transaction_id = request.POST['transaction_id']
+                transaction_id = request.POST['transaction_id'],
+                transactionttype = trans.ttype.name,
+                transactiontname =trans.name
+
                 );
             if (int(ttype) == 2):
                 if float(amount) >= float(balance):
@@ -229,6 +251,8 @@ def transaction_view(request):
             data.save()
             messages.success(request, 'Transaction was Created!')
             return HttpResponseRedirect('/transaction-setup')
+        else:
+            form = TransactionManageForm()
     else:
         form = TransactionManageForm()
     content = {
