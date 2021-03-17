@@ -16,7 +16,6 @@ from account.forms import CompanyForm, PositionForm
 from account.models import Company, Position, UserAccount, UserInfo
 from bond_fund.forms import RequestForm, TransactionManageForm
 from bond_fund.models import Account, Requests, TransactionType, TransacType
-
 from bond_fund.serializers import RequestsSerializer
 from rest_framework.generics import (
     ListAPIView,
@@ -27,6 +26,7 @@ from rest_framework.generics import (
     DestroyAPIView,
     UpdateAPIView
 )
+
 
 def load_transaction(request,id):
     data_item = TransactionType.objects.filter(ttype=id)
@@ -91,12 +91,14 @@ def all_disapprove_view(request):
     }
     return render(request,template,content)
 
+
 # view-status-request -filter
 def view_status_request(request):
     status = request.GET.get('status', None)
     data = Requests.objects.filter(status = int(status))
     data = list(data.values())
     return JsonResponse(data, safe=False)
+
 
 def view_request(request):
     if request.method == "GET":
@@ -144,6 +146,7 @@ def change_request_status(request):
 @login_required(login_url=reverse_lazy('account:login'))
 @user_is_admin
 def request_approve_checked(request):
+
     if request.GET:
         id = request.GET['id']
         data = Requests.objects.get(id=int(id))
@@ -196,7 +199,6 @@ def add_request(request):
             transaction_id = request.POST['transaction_id']
             trans = TransactionType.objects.get(id = transaction_id)
             ttype = trans.ttype_id
-
             data = Requests(
                 request_no=codeGenerator(),
                 account_no = request.POST['account_no'],
@@ -208,6 +210,7 @@ def add_request(request):
                 transaction_id = request.POST['transaction_id'],
                 transactionttype = trans.ttype.name,
                 transactiontname =trans.name
+
                 );
             if (int(ttype) == 2):
                 if float(amount) >= float(balance):
@@ -217,7 +220,6 @@ def add_request(request):
                     messages.success(request, 'Request was Created!')
                     return HttpResponseRedirect('/add-request')
             else:
-
                 data.save()
                 messages.success(request, 'Request was Created!')
                 return HttpResponseRedirect('/add-request')
